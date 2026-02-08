@@ -2,7 +2,7 @@
 set -e
 
 # Configuration
-PROJECT_NAME="myapp"
+PROJECT_NAME="topinspect"
 
 # Colors
 GREEN='\033[32m'

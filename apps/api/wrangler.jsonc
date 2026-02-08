@@ -28,31 +28,31 @@
 	 */
 	"env": {
 		"local": {
-			"name": "myapp-api-local",
+			"name": "topinspect-api-local",
 			"vars": {
 				"ENV": "development",
 			},
 		},
 		"staging": {
-			"name": "myapp-api-staging",
+			"name": "topinspect-api-staging",
 			"vars": {
 				"ENV": "staging",
 			},
 			"routes": [
 				{
-					"pattern": "api.myappstg.com",
+					"pattern": "apistg.topinspect.app",
 					"custom_domain": true,
 				},
 			],
 		},
 		"production": {
-			"name": "myapp-api",
+			"name": "topinspect-api",
 			"vars": {
 				"ENV": "production",
 			},
 			"routes": [
 				{
-					"pattern": "api.myapp.com",
+					"pattern": "api.topinspect.app",
 					"custom_domain": true,
 				},
 			],

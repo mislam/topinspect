@@ -12,7 +12,7 @@ Setup instructions for Google and Apple Sign-In with the `@the/auth/expo` packag
 - Navigate to **APIs & Services** > **Credentials**
 - Click **Create Credentials** > **OAuth client ID**
 - Select **iOS** as application type
-- Enter your Bundle ID (e.g., `com.viralapps.myawesomeapp`)
+- Enter your Bundle ID (e.g., `com.viralapps.topinspect`)
 - Copy the **Client ID** → Set as `EXPO_PUBLIC_GOOGLE_IOS_CLIENT_ID`
 - Copy the **iOS URL scheme** → Set as `EXPO_PUBLIC_GOOGLE_IOS_URL_SCHEME`
 
@@ -38,7 +38,7 @@ Setup instructions for Google and Apple Sign-In with the `@the/auth/expo` packag
    - Click **Create Credentials** > **OAuth client ID**
    - Select **Android** as application type
    - Enter:
-     - **Package name**: Your app's package name (e.g., `com.viralapps.myawesomeapp`)
+     - **Package name**: Your app's package name (e.g., `com.viralapps.topinspect`)
      - **SHA-1 certificate fingerprint**: Your SHA-1 from step 1
    - Click **Create**
    - **Note**: You don't use this Android client ID in code - it's only for SHA-1 registration

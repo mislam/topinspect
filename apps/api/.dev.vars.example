@@ -1,5 +1,5 @@
 # Application name
-APP_NAME=MyApp
+APP_NAME="Top Inspect"
 
 # Neon database connection string
 DATABASE_URL=postgres://postgres:postgres@db.localtest.me:5432/main
@@ -16,8 +16,8 @@ SMS_SENDER_ID=
 # Local development uses MinIO (via Cloudflare tunnel)
 # Change for Production:
 # - R2_ENDPOINT=https://your-account-id.r2.cloudflarestorage.com
-# - R2_BUCKET_NAME=myapp-media
-# - R2_PUBLIC_URL=https://media.myappcdn.net
+# - R2_BUCKET_NAME=topinspect-media
+# - R2_PUBLIC_URL=https://media.ticdn.net
 R2_ACCESS_KEY_ID=
 R2_SECRET_ACCESS_KEY=
 R2_BUCKET_NAME=media

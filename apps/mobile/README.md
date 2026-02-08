@@ -362,7 +362,7 @@ if (!phoneRegex.test(phone)) {
 ```typescript
 // All API calls use HTTPS
 const api = axios.create({
-	baseURL: "https://api.myawesomeapp.com",
+	baseURL: "https://api.topinspect.app",
 })
 ```
 

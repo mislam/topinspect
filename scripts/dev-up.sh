@@ -2,7 +2,7 @@
 set -e
 
 # Configuration
-PROJECT_NAME="myapp"
+PROJECT_NAME="topinspect"
 SERVICES="postgres neon-proxy minio minio-mc"
 
 # Colors

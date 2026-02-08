@@ -1,4 +1,4 @@
-name: myapp
+name: topinspect
 
 services:
   # PostgreSQL database for local development

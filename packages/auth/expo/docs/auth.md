@@ -469,7 +469,7 @@ The package requires the following environment variable:
 
 ```typescript
 // .env
-EXPO_PUBLIC_API_URL=https://api.myawesomeapp.com
+EXPO_PUBLIC_API_URL=https://api.topinspect.app
 ```
 
 For development, you can use:
