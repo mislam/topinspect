@@ -1,0 +1,25 @@
+# Application name
+APP_NAME=MyApp
+
+# Neon database connection string
+DATABASE_URL=postgres://postgres:postgres@db.localtest.me:5432/main
+
+# Secret key for signing JWT token
+# Generate with: pnpm gen:jwt-secret
+JWT_SECRET=
+
+# SMS service API credentials
+SMS_API_KEY=
+SMS_SENDER_ID=
+
+# Cloudflare R2 configuration for image uploads
+# Local development uses MinIO (via Cloudflare tunnel)
+# Change for Production:
+# - R2_ENDPOINT=https://your-account-id.r2.cloudflarestorage.com
+# - R2_BUCKET_NAME=myapp-media
+# - R2_PUBLIC_URL=https://media.myappcdn.net
+R2_ACCESS_KEY_ID=
+R2_SECRET_ACCESS_KEY=
+R2_BUCKET_NAME=media
+R2_ENDPOINT=https://media.localtest.cc
+R2_PUBLIC_URL=https://media.localtest.cc/media

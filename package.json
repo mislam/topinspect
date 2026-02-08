@@ -1,0 +1,41 @@
+{
+	"name": "myapp",
+	"version": "0.1.0",
+	"private": true,
+	"scripts": {
+		"dev:up": "./scripts/dev-up.sh",
+		"dev:down": "docker compose down",
+		"dev:api": "pnpm --filter @the/api dev",
+		"dev:mobile": "pnpm --filter @the/mobile dev",
+		"dev:tunnel": "cloudflared tunnel --config cloudflared.yaml run",
+		"dev:install:ios": "pnpm --filter @the/mobile dev:install:ios",
+		"dev:install:android": "pnpm --filter @the/mobile dev:install:android",
+		"db:push": "drizzle-kit push",
+		"db:reset": "./scripts/db-reset.sh",
+		"db:admin": "drizzle-kit studio",
+		"format": "prettier --write .",
+		"typecheck": "turbo typecheck",
+		"lint": "turbo lint",
+		"lint:fix": "turbo lint:fix",
+		"prepare": "husky"
+	},
+	"devDependencies": {
+		"@typescript-eslint/eslint-plugin": "^8.0.0",
+		"@typescript-eslint/parser": "^8.0.0",
+		"dotenv": "^17.2.1",
+		"drizzle-kit": "^0.31.4",
+		"eslint": "^9.33.0",
+		"eslint-plugin-import-x": "^4.16.1",
+		"eslint-plugin-prettier": "^5.5.4",
+		"husky": "^9.1.7",
+		"lint-staged": "^16.1.5",
+		"prettier": "^3.6.2",
+		"prettier-plugin-tailwindcss": "^0.6.14",
+		"turbo": "^2.5.5"
+	},
+	"packageManager": "pnpm@10.14.0",
+	"engines": {
+		"node": ">=22.0.0",
+		"pnpm": ">=10.14.0"
+	}
+}

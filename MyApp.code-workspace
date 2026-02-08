@@ -1,0 +1,24 @@
+{
+	"folders": [
+		{ "path": "." },
+		{ "path": "./packages" },
+		{ "path": "./apps/api" },
+		{ "path": "./apps/mobile" },
+	],
+	"settings": {
+		"editor.defaultFormatter": "esbenp.prettier-vscode",
+		"editor.formatOnSave": true,
+		"editor.quickSuggestions": {
+			"strings": true,
+		},
+		"editor.rulers": [100],
+		"editor.codeActionsOnSave": {
+			"source.fixAll.eslint": "always",
+		},
+		"eslint.validate": ["javascript", "javascriptreact", "typescript", "typescriptreact"],
+		"eslint.workingDirectories": ["apps/api", "apps/mobile"],
+		"files.associations": {
+			"*.css": "tailwindcss",
+		},
+	},
+}

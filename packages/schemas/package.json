@@ -1,0 +1,17 @@
+{
+	"name": "@the/schemas",
+	"version": "0.1.0",
+	"private": true,
+	"main": "src/index.ts",
+	"scripts": {
+		"typecheck": "tsc --noEmit",
+		"lint": "eslint src",
+		"lint:fix": "eslint src --fix"
+	},
+	"dependencies": {
+		"zod": "^4.0.14"
+	},
+	"devDependencies": {
+		"typescript": "^5.9.2"
+	}
+}

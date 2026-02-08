@@ -1,0 +1,17 @@
+{
+	"_comment": "Shared TypeScript configuration for the monorepo packages. Extend this file in package tsconfig.json files.",
+	"compilerOptions": {
+		"target": "esnext",
+		"lib": ["es2022", "dom"],
+		"allowJs": true,
+		"skipLibCheck": true,
+		"esModuleInterop": true,
+		"allowSyntheticDefaultImports": true,
+		"strict": true,
+		"forceConsistentCasingInFileNames": true,
+		"moduleResolution": "node",
+		"resolveJsonModule": true,
+		"isolatedModules": true,
+		"noEmit": true
+	}
+}

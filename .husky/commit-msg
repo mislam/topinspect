@@ -1,0 +1,18 @@
+# Simple commit message validation
+# You can enhance this later with commitlint if needed
+commit_regex='^(feat|fix|docs|style|refactor|test|chore|perf|ci|build|revert)(\(.+\))?: .{1,}'
+
+if ! grep -qE "$commit_regex" "$1"; then
+    echo "Invalid commit message format."
+    echo "Please use conventional commit format:"
+    echo "  feat: add new feature"
+    echo "  fix: resolve bug"
+    echo "  docs: update documentation"
+    echo "  style: formatting changes"
+    echo "  refactor: code refactoring"
+    echo "  test: add tests"
+    echo "  chore: maintenance tasks"
+    exit 1
+fi
+
+echo "\033[32m✔\033[0m Commit message format is valid!\n"
