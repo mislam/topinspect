@@ -33,6 +33,20 @@ services:
       postgres:
         condition: service_healthy
 
+  # Mailpit - local email server for local development
+  mailpit:
+    image: axllent/mailpit
+    volumes:
+      - mailpit_data:/data
+    ports:
+      - 8025:8025
+      - 1025:1025
+    environment:
+      MP_MAX_MESSAGES: 5000
+      MP_DATABASE: /data/mailpit.db
+      MP_SMTP_AUTH_ACCEPT_ANY: 1
+      MP_SMTP_AUTH_ALLOW_INSECURE: 1
+
   # MinIO object storage for local development
   minio:
     image: quay.io/minio/minio
@@ -66,4 +80,5 @@ services:
 
 volumes:
   db_data:
+  mailpit_data:
   minio_data:

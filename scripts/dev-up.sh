@@ -3,7 +3,7 @@ set -e
 
 # Configuration
 PROJECT_NAME="topinspect"
-SERVICES="postgres neon-proxy minio minio-mc"
+SERVICES="postgres neon-proxy mailpit minio minio-mc"
 
 # Colors
 GREEN='\033[32m'
@@ -81,6 +81,7 @@ show_status() {
 	echo "\n${GREEN}✅ Development environment is ready!${RESET}\n"
 	echo " ✦ PostgreSQL: localhost:5432 (postgres/postgres)"
 	echo " ✦ Neon Proxy: localhost:4444"
+	echo " ✦ Mailpit: http://localhost:8025"
 	echo " ✦ MinIO Console: http://localhost:9001 (minio/minio123)"
 	echo " ✦ MinIO API: http://localhost:9000"
 }

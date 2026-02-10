@@ -210,6 +210,7 @@ The development environment includes:
 - **Wrangler Server**: Local dev server for Cloudflare Worker (localhost:8787)
 - **PostgreSQL 17**: Main database (localhost:5432)
 - **Neon Proxy**: Enables Neon serverless driver with local PostgreSQL (localhost:4444)
+- **Mailpit**: Email & SMTP testing (localhost:8025)
 - **MinIO**: Object storage (localhost:9000, Console: localhost:9001)
 
 ## 📚 Documentation
