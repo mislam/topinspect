@@ -14,6 +14,7 @@ declare namespace Cloudflare {
 		R2_BUCKET_NAME: string
 		R2_ENDPOINT: string
 		R2_PUBLIC_URL: string
+		GOOGLE_MAPS_API_KEY: string
 	}
 }
 interface CloudflareBindings extends Cloudflare.Env {}
