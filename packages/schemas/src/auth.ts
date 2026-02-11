@@ -1,11 +1,11 @@
 import { z } from "zod"
 
 import {
-	appleIdToken,
 	birthYear,
 	deviceInfo,
+	email,
 	gender,
-	googleIdToken,
+	oauthIdToken,
 	otp,
 	otpRequestPurpose,
 	phone,
@@ -36,15 +36,9 @@ export const phoneSignInSchema = z.object({
 	deviceInfo: deviceInfo.optional(), // optional for flexibility (although required by the database)
 })
 
-// Google Sign-in Validation Schema
-export const googleSignInSchema = z.object({
-	idToken: googleIdToken,
-	deviceInfo: deviceInfo.optional(), // optional for flexibility (although required by the database)
-})
-
-// Apple Sign-in Validation Schema
-export const appleSignInSchema = z.object({
-	idToken: appleIdToken,
+// OAuth Sign-in Validation Schema (Google, Apple, etc.)
+export const oauthSignInSchema = z.object({
+	idToken: oauthIdToken,
 	deviceInfo: deviceInfo.optional(), // optional for flexibility (although required by the database)
 })
 
@@ -57,7 +51,7 @@ export const refreshTokensSchema = z.object({
 export const oauthSignupSchema = z.object({
 	provider: z.enum(["google", "apple"]),
 	providerId: z.string().min(1, "Provider ID is required"),
-	email: z.string().email().optional().nullable(),
+	email: email,
 	name: userName,
 	gender: gender,
 	birthYear: birthYear,
@@ -73,8 +67,7 @@ export const logoutSchema = z.object({
 export type OtpRequest = z.infer<typeof otpRequestSchema>
 export type PhoneSignupRequest = z.infer<typeof phoneSignupSchema>
 export type PhoneSignInRequest = z.infer<typeof phoneSignInSchema>
-export type GoogleSignInRequest = z.infer<typeof googleSignInSchema>
-export type AppleSignInRequest = z.infer<typeof appleSignInSchema>
+export type OAuthSignInRequest = z.infer<typeof oauthSignInSchema>
 export type OAuthSignupRequest = z.infer<typeof oauthSignupSchema>
 export type RefreshTokensRequest = z.infer<typeof refreshTokensSchema>
 export type LogoutRequest = z.infer<typeof logoutSchema>

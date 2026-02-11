@@ -1,7 +1,6 @@
 import {
-	appleSignInSchema,
-	googleSignInSchema,
 	logoutSchema,
+	oauthSignInSchema,
 	oauthSignupSchema,
 	otpRequestSchema,
 	phoneSignInSchema,
@@ -11,6 +10,7 @@ import {
 import { capitalizeFirst, getArticle } from "@the/utils/shared"
 import { and, eq } from "drizzle-orm"
 import { sign } from "hono/jwt"
+import { createRemoteJWKSet, jwtVerify } from "jose"
 
 import { AUTH_CONFIG } from "./config"
 
@@ -218,6 +218,25 @@ const verifyOTPCode = async (
 	return { success: true }
 }
 
+// Map OTP verification errors to API responses
+const handleOtpError = (
+	c: Context,
+	otpResult: OtpVerificationResult & { success: false },
+): ReturnType<typeof res.expiredOtp> => {
+	switch (otpResult.errorCode) {
+		case "OTP_EXPIRED":
+			return res.expiredOtp(c)
+		case "OTP_MAX_ATTEMPTS":
+			return res.tooManyOtpAttempts(c)
+		case "OTP_INVALID":
+			return res.invalidOtp(c)
+		case "OTP_NOT_FOUND":
+			return res.unauthorized(c, otpResult.error || "OTP verification failed")
+		default:
+			return res.unauthorized(c, otpResult.error || "OTP verification failed")
+	}
+}
+
 // Common token issuance logic for mobile clients
 const issueTokens = async (
 	c: Context,
@@ -247,21 +266,7 @@ const phoneSignup: Handler<typeof phoneSignupSchema> = async (c) => {
 
 	// Verify OTP first
 	const otpResult = await verifyOTPCode(c, phone, code)
-	if (!otpResult.success) {
-		// Map OTP error codes to specific API error codes
-		switch (otpResult.errorCode) {
-			case "OTP_EXPIRED":
-				return res.expiredOtp(c)
-			case "OTP_MAX_ATTEMPTS":
-				return res.tooManyOtpAttempts(c)
-			case "OTP_INVALID":
-				return res.invalidOtp(c)
-			case "OTP_NOT_FOUND":
-				return res.unauthorized(c, otpResult.error || "OTP verification failed")
-			default:
-				return res.unauthorized(c, otpResult.error || "OTP verification failed")
-		}
-	}
+	if (!otpResult.success) return handleOtpError(c, otpResult)
 
 	const db = getDb(c)
 
@@ -309,7 +314,7 @@ const phoneSignup: Handler<typeof phoneSignupSchema> = async (c) => {
 
 	return res.created(c, {
 		...tokens,
-	})
+	} as TokenResponse)
 }
 
 // Phone Sign-In: Sign in existing user with OTP verification
@@ -318,21 +323,7 @@ const phoneSignIn: Handler<typeof phoneSignInSchema> = async (c) => {
 
 	// Verify OTP first
 	const otpResult = await verifyOTPCode(c, phone, code)
-	if (!otpResult.success) {
-		// Map OTP error codes to specific API error codes
-		switch (otpResult.errorCode) {
-			case "OTP_EXPIRED":
-				return res.expiredOtp(c)
-			case "OTP_MAX_ATTEMPTS":
-				return res.tooManyOtpAttempts(c)
-			case "OTP_INVALID":
-				return res.invalidOtp(c)
-			case "OTP_NOT_FOUND":
-				return res.unauthorized(c, otpResult.error || "OTP verification failed")
-			default:
-				return res.unauthorized(c, otpResult.error || "OTP verification failed")
-		}
-	}
+	if (!otpResult.success) return handleOtpError(c, otpResult)
 
 	const db = getDb(c)
 
@@ -357,7 +348,7 @@ const phoneSignIn: Handler<typeof phoneSignInSchema> = async (c) => {
 
 	return res.ok(c, {
 		...tokens,
-	})
+	} as TokenResponse)
 }
 
 // Refresh Access Token - Uses refresh token to get new access token
@@ -414,170 +405,90 @@ const logout: Handler<typeof logoutSchema> = async (c) => {
 	return res.ok(c, { message: "Logged out" })
 }
 
-// Decode JWT token (base64url decode) - only decodes, doesn't verify signature
-const decodeJWT = (token: string): Record<string, unknown> => {
-	try {
-		const parts = token.split(".")
-		if (parts.length !== 3) {
-			throw new Error("Invalid JWT format")
+// OAuth JWT verification: fetches JWKS from provider, verifies signature + issuer + expiry
+// JWKS is cached by jose; keys are resolved by kid from JWT header
+type OAuthVerifierConfig = {
+	jwks: ReturnType<typeof createRemoteJWKSet>
+	issuer: string | readonly string[]
+	providerName: string
+}
+
+const OAUTH_VERIFIER_CONFIGS: Record<"google" | "apple", OAuthVerifierConfig> = {
+	google: {
+		jwks: createRemoteJWKSet(new URL("https://www.googleapis.com/oauth2/v3/certs")),
+		issuer: ["https://accounts.google.com", "accounts.google.com"],
+		providerName: "Google",
+	},
+	apple: {
+		jwks: createRemoteJWKSet(new URL("https://appleid.apple.com/auth/keys")),
+		issuer: "https://appleid.apple.com",
+		providerName: "Apple",
+	},
+}
+
+const verifyOAuthJWT = async (
+	token: string,
+	config: OAuthVerifierConfig,
+): Promise<Record<string, unknown>> => {
+	const { payload } = await jwtVerify(token, config.jwks, {
+		issuer: config.issuer as string | string[],
+		// audience: optional - add GOOGLE_CLIENT_ID / APPLE_CLIENT_ID env when available
+	})
+	return payload as Record<string, unknown>
+}
+
+// OAuth sign-in handler factory - shared logic for Google, Apple, etc.
+type OAuthProvider = "google" | "apple"
+
+const createOAuthSignInHandler = (provider: OAuthProvider): Handler<typeof oauthSignInSchema> =>
+	async function oauthSignIn(c) {
+		const { idToken, deviceInfo } = c.get("validated")
+		const invalidTokenMessage = `Invalid ${capitalizeFirst(provider)} ID token`
+
+		let claims: Record<string, unknown>
+		try {
+			claims = await verifyOAuthJWT(idToken, OAUTH_VERIFIER_CONFIGS[provider])
+		} catch (error) {
+			return res.unauthorized(c, error instanceof Error ? error.message : invalidTokenMessage)
 		}
-		// Decode the payload (second part)
-		const payload = parts[1]
-		// Replace URL-safe base64 characters
-		const base64 = payload.replace(/-/g, "+").replace(/_/g, "/")
-		// Add padding if needed
-		const padded = base64 + "=".repeat((4 - (base64.length % 4)) % 4)
-		// Decode
-		const decoded = atob(padded)
-		return JSON.parse(decoded)
-	} catch {
-		throw new Error("Failed to decode JWT token")
-	}
-}
 
-// Decode JWT header to get algorithm and key ID
-const decodeJWTHeader = (token: string): { alg: string; kid?: string } => {
-	try {
-		const parts = token.split(".")
-		if (parts.length !== 3) {
-			throw new Error("Invalid JWT format")
+		const email = claims.email as string | undefined
+		const providerId = claims.sub as string | undefined
+
+		if (!email || !providerId) {
+			return res.unauthorized(c, invalidTokenMessage)
 		}
-		const header = parts[0]
-		const base64 = header.replace(/-/g, "+").replace(/_/g, "/")
-		const padded = base64 + "=".repeat((4 - (base64.length % 4)) % 4)
-		const decoded = atob(padded)
-		return JSON.parse(decoded)
-	} catch {
-		throw new Error("Failed to decode JWT header")
-	}
-}
 
-// Verify Google JWT token signature and claims
-const verifyGoogleJWT = async (token: string): Promise<Record<string, unknown>> => {
-	const header = decodeJWTHeader(token)
-	const claims = decodeJWT(token)
+		const db = getDb(c)
 
-	// Verify issuer
-	if (claims.iss !== "https://accounts.google.com" && claims.iss !== "accounts.google.com") {
-		throw new Error("Invalid Google token issuer")
-	}
-
-	// Verify expiration
-	if (typeof claims.exp === "number" && claims.exp < Math.floor(Date.now() / 1000)) {
-		throw new Error("Google token has expired")
-	}
-
-	// Verify audience (should match your Google OAuth client ID)
-	// Note: This requires the client ID to be configured
-	// For now, we'll skip audience verification as it requires environment variable
-	// TODO: Add audience verification when client ID is available in environment
-
-	// Verify signature using Google's JWKS
-	// For production, you should fetch and cache JWKS
-	// For now, we'll do basic validation and note that full signature verification
-	// requires fetching JWKS from https://www.googleapis.com/oauth2/v3/certs
-	// This is a security improvement but requires additional implementation
-
-	// Basic structure validation - full signature verification requires JWKS
-	if (!header.kid) {
-		throw new Error("Google token missing key ID")
-	}
-
-	return claims
-}
-
-// Verify Apple JWT token signature and claims
-const verifyAppleJWT = async (token: string): Promise<Record<string, unknown>> => {
-	const header = decodeJWTHeader(token)
-	const claims = decodeJWT(token)
-
-	// Verify issuer
-	if (claims.iss !== "https://appleid.apple.com") {
-		throw new Error("Invalid Apple token issuer")
-	}
-
-	// Verify expiration
-	if (typeof claims.exp === "number" && claims.exp < Math.floor(Date.now() / 1000)) {
-		throw new Error("Apple token has expired")
-	}
-
-	// Verify audience (should match your Apple client ID)
-	// Note: This requires the client ID to be configured
-	// TODO: Add audience verification when client ID is available in environment
-
-	// Verify signature using Apple's JWKS
-	// For production, you should fetch and cache JWKS
-	// For now, we'll do basic validation and note that full signature verification
-	// requires fetching JWKS from https://appleid.apple.com/auth/keys
-	// This is a security improvement but requires additional implementation
-
-	// Basic structure validation - full signature verification requires JWKS
-	if (!header.kid) {
-		throw new Error("Apple token missing key ID")
-	}
-
-	return claims
-}
-
-// Google Sign-in: Authenticate with Google ID token
-const googleSignIn: Handler<typeof googleSignInSchema> = async (c) => {
-	const { idToken, deviceInfo } = c.get("validated")
-
-	// Verify and decode the Google ID token
-	let googleClaims: Record<string, unknown>
-	try {
-		googleClaims = await verifyGoogleJWT(idToken)
-	} catch (error) {
-		return res.unauthorized(c, error instanceof Error ? error.message : "Invalid Google ID token")
-	}
-
-	// Extract user information from Google token
-	const email = googleClaims.email as string | undefined
-	const googleId = googleClaims.sub as string | undefined
-
-	if (!email || !googleId) {
-		return res.unauthorized(c, "Invalid Google ID token: missing email or user ID")
-	}
-
-	const db = getDb(c)
-
-	// Check if user already exists by Google provider ID
-	const [existingAuth] = await db
-		.select()
-		.from(auth)
-		.where(and(eq(auth.provider, "google"), eq(auth.identifier, googleId))!)
-		.limit(1)
-
-	if (existingAuth) {
-		// User exists, check if profile exists
-		const [existingUser] = await db
+		const [existingAuth] = await db
 			.select()
-			.from(users)
-			.where(eq(users.id, existingAuth.id))
+			.from(auth)
+			.where(and(eq(auth.provider, provider), eq(auth.identifier, providerId))!)
 			.limit(1)
 
-		if (!existingUser) {
-			return res.profileIncomplete(c, "User profile incomplete. Please contact support.")
+		if (existingAuth) {
+			const [existingUser] = await db
+				.select()
+				.from(users)
+				.where(eq(users.id, existingAuth.id))
+				.limit(1)
+
+			if (!existingUser) {
+				return res.profileIncomplete(c, "User profile incomplete. Please contact support.")
+			}
+
+			if (!existingAuth.email) {
+				await db.update(auth).set({ email }).where(eq(auth.id, existingAuth.id))
+			}
+
+			const tokens = await issueTokens(c, existingAuth.id, deviceInfo)
+			return res.ok(c, { ...tokens } as TokenResponse)
 		}
 
-		// Update email if provided and not set
-		if (email && !existingAuth.email) {
-			await db.update(auth).set({ email }).where(eq(auth.id, existingAuth.id))
-		}
-
-		// Issue authentication tokens
-		const tokens = await issueTokens(c, existingAuth.id, deviceInfo)
-
-		return res.ok(c, {
-			...tokens,
-		})
-	}
-
-	// New user - check if email is already used by a different provider
-	if (email) {
 		const [emailConflict] = await db.select().from(auth).where(eq(auth.email, email)).limit(1)
 
-		if (emailConflict && emailConflict.provider !== "google") {
+		if (emailConflict && emailConflict.provider !== provider) {
 			const providerName = capitalizeFirst(emailConflict.provider)
 			const article = getArticle(emailConflict.provider)
 			return res.conflict(
@@ -585,94 +496,17 @@ const googleSignIn: Handler<typeof googleSignInSchema> = async (c) => {
 				`This email is already associated with ${article} ${providerName} account. Please sign in with ${providerName} instead.`,
 			)
 		}
-	}
-
-	// New user - return provider info for signup (don't create records yet)
-	return res.ok(c, {
-		needsSignup: true,
-		provider: "google",
-		providerId: googleId,
-		email,
-	} as TokenResponse)
-}
-
-// Apple Sign-in: Authenticate with Apple ID token
-const appleSignIn: Handler<typeof appleSignInSchema> = async (c) => {
-	const { idToken, deviceInfo } = c.get("validated")
-
-	// Verify and decode the Apple ID token
-	let appleClaims: Record<string, unknown>
-	try {
-		appleClaims = await verifyAppleJWT(idToken)
-	} catch (error) {
-		return res.unauthorized(c, error instanceof Error ? error.message : "Invalid Apple ID token")
-	}
-
-	// Extract user information from Apple token
-	// Apple uses 'sub' for user ID and 'email' for email (may be null if user chose to hide it)
-	const email = appleClaims.email as string | undefined
-	const appleId = appleClaims.sub as string | undefined
-
-	if (!appleId) {
-		return res.unauthorized(c, "Invalid Apple ID token: missing user ID")
-	}
-
-	const db = getDb(c)
-
-	// Check if user already exists by Apple provider ID
-	const [existingAuth] = await db
-		.select()
-		.from(auth)
-		.where(and(eq(auth.provider, "apple"), eq(auth.identifier, appleId))!)
-		.limit(1)
-
-	if (existingAuth) {
-		// User exists, check if profile exists
-		const [existingUser] = await db
-			.select()
-			.from(users)
-			.where(eq(users.id, existingAuth.id))
-			.limit(1)
-
-		if (!existingUser) {
-			return res.profileIncomplete(c, "User profile incomplete. Please contact support.")
-		}
-
-		// Update email if provided and not set
-		if (email && !existingAuth.email) {
-			await db.update(auth).set({ email }).where(eq(auth.id, existingAuth.id))
-		}
-
-		// Issue authentication tokens
-		const tokens = await issueTokens(c, existingAuth.id, deviceInfo)
 
 		return res.ok(c, {
-			...tokens,
-		})
+			needsSignup: true,
+			provider,
+			providerId,
+			email,
+		} as TokenResponse)
 	}
 
-	// New user - check if email is already used by a different provider
-	if (email) {
-		const [emailConflict] = await db.select().from(auth).where(eq(auth.email, email)).limit(1)
-
-		if (emailConflict && emailConflict.provider !== "apple") {
-			const providerName = capitalizeFirst(emailConflict.provider)
-			const article = getArticle(emailConflict.provider)
-			return res.conflict(
-				c,
-				`This email is already associated with ${article} ${providerName} account. Please sign in with ${providerName} instead.`,
-			)
-		}
-	}
-
-	// New user - return provider info for signup (don't create records yet)
-	return res.ok(c, {
-		needsSignup: true,
-		provider: "apple",
-		providerId: appleId,
-		email: email || undefined, // Apple may not provide email
-	} as TokenResponse)
-}
+const googleSignIn = createOAuthSignInHandler("google")
+const appleSignIn = createOAuthSignInHandler("apple")
 
 // OAuth Signup: Complete OAuth signup with profile data
 const oauthSignup: Handler<typeof oauthSignupSchema> = async (c) => {
@@ -695,12 +529,13 @@ const oauthSignup: Handler<typeof oauthSignupSchema> = async (c) => {
 			.where(eq(users.id, existingAuth.id))
 			.limit(1)
 
+		// This should never happen, but we'll handle it gracefully
 		if (!existingUser) {
 			return res.profileIncomplete(c, "User profile incomplete. Please contact support.")
 		}
 
 		// Update email if provided and not set
-		if (email && !existingAuth.email) {
+		if (!existingAuth.email) {
 			await db.update(auth).set({ email }).where(eq(auth.id, existingAuth.id))
 		}
 
@@ -709,21 +544,19 @@ const oauthSignup: Handler<typeof oauthSignupSchema> = async (c) => {
 
 		return res.ok(c, {
 			...tokens,
-		})
+		} as TokenResponse)
 	}
 
 	// New user - check if email is already used by a different provider (safety check)
-	if (email) {
-		const [emailConflict] = await db.select().from(auth).where(eq(auth.email, email)).limit(1)
+	const [emailConflict] = await db.select().from(auth).where(eq(auth.email, email)).limit(1)
 
-		if (emailConflict && emailConflict.provider !== provider) {
-			const providerName = capitalizeFirst(emailConflict.provider)
-			const article = getArticle(emailConflict.provider)
-			return res.conflict(
-				c,
-				`This email is already associated with ${article} ${providerName} account. Please sign in with ${providerName} instead.`,
-			)
-		}
+	if (emailConflict && emailConflict.provider !== provider) {
+		const providerName = capitalizeFirst(emailConflict.provider)
+		const article = getArticle(emailConflict.provider)
+		return res.conflict(
+			c,
+			`This email is already associated with ${article} ${providerName} account. Please sign in with ${providerName} instead.`,
+		)
 	}
 
 	// New user - create auth and user records
@@ -731,7 +564,7 @@ const oauthSignup: Handler<typeof oauthSignupSchema> = async (c) => {
 		.insert(auth)
 		.values({
 			provider,
-			email: email || null,
+			email,
 			identifier: providerId,
 		})
 		.returning()
@@ -753,17 +586,24 @@ const oauthSignup: Handler<typeof oauthSignupSchema> = async (c) => {
 	// Issue authentication tokens
 	const tokens = await issueTokens(c, newAuth.id, deviceInfo)
 
+	// Send welcome email
+	// await sendEmail(c, welcome, {
+	// 	to: email,
+	// 	appName: getEnv(c).APP_NAME,
+	// 	providerName: capitalizeFirst(provider),
+	// })
+
 	return res.created(c, {
 		...tokens,
-	})
+	} as TokenResponse)
 }
 
 export const registerRoutes = (app: Hono) => {
 	app.post("/auth/phone/otp", validate(otpRequestSchema), requestOTP)
 	app.post("/auth/phone/signup", validate(phoneSignupSchema), phoneSignup)
 	app.post("/auth/phone/login", validate(phoneSignInSchema), phoneSignIn)
-	app.post("/auth/google", validate(googleSignInSchema), googleSignIn)
-	app.post("/auth/apple", validate(appleSignInSchema), appleSignIn)
+	app.post("/auth/google", validate(oauthSignInSchema), googleSignIn)
+	app.post("/auth/apple", validate(oauthSignInSchema), appleSignIn)
 	app.post("/auth/oauth/signup", validate(oauthSignupSchema), oauthSignup)
 	app.post("/auth/token/refresh", validate(refreshTokensSchema), refreshTokens)
 	app.post("/auth/logout", validate(logoutSchema), logout)

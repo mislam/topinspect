@@ -31,7 +31,7 @@ export function useSignupFlow(params: SignupScreenParams) {
 	const oauthForm = useForm(oauthSignupSchema, {
 		provider: (provider as "google" | "apple") || "google",
 		providerId: providerId || "",
-		email: email || null,
+		email: email || "",
 	})
 	const form = isOAuthSignup ? oauthForm : phoneForm
 
@@ -110,7 +110,7 @@ export function useSignupFlow(params: SignupScreenParams) {
 				await signUpWithOAuth({
 					provider: provider as "google" | "apple",
 					providerId,
-					email: email || null,
+					email: email || "",
 					name: form.data.name,
 					gender: form.data.gender,
 					birthYear: form.data.birthYear,

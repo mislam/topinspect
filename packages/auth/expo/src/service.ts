@@ -1,6 +1,5 @@
 import {
-	type AppleSignInRequest,
-	type GoogleSignInRequest,
+	type OAuthSignInRequest,
 	type OAuthSignupRequest,
 	type OtpRequest,
 	type PhoneSignInRequest,
@@ -18,12 +17,7 @@ import { setErrorState } from "./util"
  * @param req - The request object
  */
 const injectDeviceInfo = (
-	req:
-		| PhoneSignupRequest
-		| PhoneSignInRequest
-		| GoogleSignInRequest
-		| AppleSignInRequest
-		| OAuthSignupRequest,
+	req: PhoneSignupRequest | PhoneSignInRequest | OAuthSignInRequest | OAuthSignupRequest,
 ) => {
 	req.deviceInfo = getDeviceInfo()
 }
@@ -74,7 +68,7 @@ export const signInWithPhone = async (req: PhoneSignInRequest) => {
 export const signInWithGoogle = async (idToken: string) => {
 	useAuthStore.setState({ isLoading: true, error: null })
 	try {
-		const req: GoogleSignInRequest = { idToken }
+		const req: OAuthSignInRequest = { idToken }
 		injectDeviceInfo(req)
 		const { data } = await api.post<TokenResponse>("/auth/google", req)
 
@@ -104,7 +98,7 @@ export const signInWithGoogle = async (idToken: string) => {
 export const signInWithApple = async (idToken: string) => {
 	useAuthStore.setState({ isLoading: true, error: null })
 	try {
-		const req: AppleSignInRequest = { idToken }
+		const req: OAuthSignInRequest = { idToken }
 		injectDeviceInfo(req)
 		const { data } = await api.post<TokenResponse>("/auth/apple", req)
 

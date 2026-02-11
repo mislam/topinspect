@@ -8,6 +8,12 @@ export const phone = z
 	.transform((val) => val.trim().replace(/\D/g, ""))
 	.refine((val) => /^[2-9]\d{2}[2-9](?!11)\d{2}\d{4}$/.test(val), "Invalid phone number")
 
+export const email = z
+	.string()
+	.nonempty("Email is required")
+	.transform((val) => val.trim().toLowerCase())
+	.pipe(z.email("Invalid email address"))
+
 export const otp = z
 	.string()
 	.nonempty("OTP is required")
@@ -49,19 +55,12 @@ export const refreshToken = z
 
 export const otpRequestPurpose = z.enum(["login", "signup"])
 
-// Google sign-in primitives
-export const googleIdToken = z
+// OAuth ID token (Google, Apple, etc.) - shared validation
+export const oauthIdToken = z
 	.string()
-	.nonempty("Google ID token is required")
+	.nonempty("OAuth ID token is required")
 	.transform((val) => val.trim())
-	.refine((val) => val.length >= 100, "Invalid Google ID token format")
-
-// Apple sign-in primitives
-export const appleIdToken = z
-	.string()
-	.nonempty("Apple ID token is required")
-	.transform((val) => val.trim())
-	.refine((val) => val.length >= 100, "Invalid Apple ID token format")
+	.refine((val) => val.length >= 100, "Invalid OAuth ID token format")
 
 export const imageUrl = z.url("Invalid image URL").max(500, "Image URL is too long")
 
