@@ -9,6 +9,13 @@
 		},
 		"lint:fix": {
 			"outputs": []
+		},
+		"test": {
+			"outputs": []
+		},
+		"test:watch": {
+			"outputs": [],
+			"persistent": true
 		}
 	}
 }

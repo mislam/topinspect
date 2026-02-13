@@ -21,8 +21,10 @@ import type { OtpResponse, TokenResponse } from "@the/types"
 import type { Context, Hono } from "hono"
 
 import { getDb } from "@/adapters/database"
+import { sendEmail } from "@/adapters/email"
 import { sendOTP } from "@/adapters/sms"
 import { auth, otps, tokens, users } from "@/db/schema"
+import { WelcomeEmail } from "@/emails"
 import { daysFromNow, minutesAgo, minutesFromNow, now } from "@/utils/date"
 import { getEnv } from "@/utils/env"
 import { res } from "@/utils/response"
@@ -266,7 +268,9 @@ const phoneSignup: Handler<typeof phoneSignupSchema> = async (c) => {
 
 	// Verify OTP first
 	const otpResult = await verifyOTPCode(c, phone, code)
-	if (!otpResult.success) return handleOtpError(c, otpResult)
+	if (!otpResult.success) {
+		return handleOtpError(c, otpResult)
+	}
 
 	const db = getDb(c)
 
@@ -323,7 +327,9 @@ const phoneSignIn: Handler<typeof phoneSignInSchema> = async (c) => {
 
 	// Verify OTP first
 	const otpResult = await verifyOTPCode(c, phone, code)
-	if (!otpResult.success) return handleOtpError(c, otpResult)
+	if (!otpResult.success) {
+		return handleOtpError(c, otpResult)
+	}
 
 	const db = getDb(c)
 
@@ -587,11 +593,18 @@ const oauthSignup: Handler<typeof oauthSignupSchema> = async (c) => {
 	const tokens = await issueTokens(c, newAuth.id, deviceInfo)
 
 	// Send welcome email
-	// await sendEmail(c, welcome, {
-	// 	to: email,
-	// 	appName: getEnv(c).APP_NAME,
-	// 	providerName: capitalizeFirst(provider),
-	// })
+	c.executionCtx.waitUntil(
+		sendEmail(c, {
+			to: email,
+			subject: `Welcome to ${getEnv(c).APP_NAME}`,
+			template: WelcomeEmail({
+				appName: getEnv(c).APP_NAME,
+				username: name.split(" ")[0], // use first name for greeting
+				dashboardUrl: `${getEnv(c).APP_URL}/dashboard`,
+				supportUrl: `${getEnv(c).APP_URL}/support`,
+			}),
+		}),
+	)
 
 	return res.created(c, {
 		...tokens,

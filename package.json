@@ -1,12 +1,13 @@
 {
 	"name": "topinspect",
-	"version": "0.1.0",
+	"version": "0.2.0",
 	"private": true,
 	"scripts": {
 		"dev:up": "./scripts/dev-up.sh",
 		"dev:down": "docker compose down",
 		"dev:api": "pnpm --filter @the/api dev",
 		"dev:mobile": "pnpm --filter @the/mobile dev",
+		"dev:email": "pnpm --filter @the/email dev",
 		"dev:tunnel": "cloudflared tunnel --config cloudflared.yaml run",
 		"dev:install:ios": "pnpm --filter @the/mobile dev:install:ios",
 		"dev:install:android": "pnpm --filter @the/mobile dev:install:android",
@@ -17,6 +18,9 @@
 		"typecheck": "turbo typecheck",
 		"lint": "turbo lint",
 		"lint:fix": "turbo lint:fix",
+		"test": "turbo test",
+		"test:watch": "turbo test:watch",
+		"clean": "./scripts/clean.sh",
 		"prepare": "husky"
 	},
 	"devDependencies": {
@@ -31,7 +35,8 @@
 		"lint-staged": "^16.1.5",
 		"prettier": "^3.6.2",
 		"prettier-plugin-tailwindcss": "^0.6.14",
-		"turbo": "^2.5.5"
+		"turbo": "^2.5.5",
+		"vitest": "^3.2.4"
 	},
 	"packageManager": "pnpm@10.14.0",
 	"engines": {

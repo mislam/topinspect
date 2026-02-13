@@ -3,7 +3,9 @@ import type { Context } from "hono"
 import { getEnv } from "@/utils/env"
 
 export async function getPropertyImage(c: Context, address: string): Promise<string | null> {
-	if (!address.trim()) return null
+	if (!address.trim()) {
+		return null
+	}
 
 	const params = new URLSearchParams({
 		size: "640x480",

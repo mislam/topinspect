@@ -60,7 +60,9 @@ export const res = {
 			error,
 			code: options.code ?? "UNKNOWN_ERROR",
 		}
-		if (options.details !== undefined) response.details = options.details
+		if (options.details !== undefined) {
+			response.details = options.details
+		}
 
 		return c.json(response, options.status ?? 400)
 	},

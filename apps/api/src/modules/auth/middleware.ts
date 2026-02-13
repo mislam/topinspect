@@ -11,7 +11,7 @@ import { res } from "@/utils/response"
 
 // Verify an access token (local to middleware since it's only used here)
 const verifyAccessToken = async (c: Context, token: string): Promise<JwtPayload> => {
-	const payload = (await verify(token, getEnv(c).JWT_SECRET)) as unknown as JwtPayload
+	const payload = (await verify(token, getEnv(c).JWT_SECRET, "HS256")) as unknown as JwtPayload
 	return payload
 }
 

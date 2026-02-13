@@ -17,7 +17,9 @@ export const getDb = (c: Context): ReturnType<typeof drizzle> => {
 
 	// Check cache for existing database instance
 	let db = dbCache.get(connectionString)
-	if (db) return db
+	if (db) {
+		return db
+	}
 
 	try {
 		// Configure Neon for local development

@@ -1,5 +1,5 @@
-# Application name
 APP_NAME="Top Inspect"
+APP_URL=https://www.topinspect.app
 
 # Neon database connection string
 DATABASE_URL=postgres://postgres:postgres@db.localtest.me:5432/main
@@ -26,3 +26,10 @@ R2_PUBLIC_URL=https://media.localtest.cc/media
 
 # Google Maps Platform API credentials
 GOOGLE_MAPS_API_KEY=
+
+# Outgoing email provider settings
+# Use "mailpit" for local development with no API key
+# Change to "resend" or "postmark" for production
+EMAIL_PROVIDER=mailpit
+EMAIL_API_KEY=
+EMAIL_FROM="Top Inspect <support@topinspect.app>"
