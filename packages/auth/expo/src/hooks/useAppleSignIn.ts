@@ -88,12 +88,15 @@ export function useAppleSignIn() {
 			}
 
 			// Fallback error
+			logger.debug(
+				`Failed to sign in with Apple.\nCode: ${err.code || "UNKNOWN"}` +
+					(err.message ? `\nMessage: ${err.message}` : ""),
+			)
 			setError({
 				type: "oauth",
 				code: err.code,
 				message:
-					`Failed to sign in with Apple.\nCode: ${err.code || "UNKNOWN"}` +
-					(err.message ? `\nMessage: ${err.message}` : ""),
+					"Failed to sign in with Apple. Please try again later or contact support if the issue persists.",
 			})
 		} finally {
 			setIsLoading(false)

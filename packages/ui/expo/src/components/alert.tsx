@@ -128,9 +128,9 @@ const AlertComponent = memo(
 			// Show animation for toast mode
 			useEffect(() => {
 				if (mode === "toast") {
-					translateY.value = withSpring(0, { damping: 15, stiffness: 150 })
-					opacity.value = withTiming(1, { duration: 300 })
-					scale.value = withSpring(1, { damping: 15, stiffness: 150 })
+					translateY.value = withSpring(0, { damping: 22, stiffness: 400 })
+					opacity.value = withTiming(1, { duration: 150 })
+					scale.value = withSpring(1, { damping: 22, stiffness: 400 })
 				}
 			}, [mode, translateY, opacity, scale])
 

@@ -81,7 +81,7 @@ export default function Login() {
 					<View className="items-center">
 						<View style={{ flexShrink: 0 }}>
 							<Text className="text-2xl font-bold" numberOfLines={1}>
-								Welcome Back
+								Welcome
 							</Text>
 						</View>
 						<Text variant="secondary">Sign in to continue with your account</Text>
@@ -143,7 +143,7 @@ export default function Login() {
 										<Svg name="google" width={24} height={24} />
 									)}
 									<Text className="ml-2 text-center text-base font-semibold">
-										Sign in with Google
+										Continue with Google
 									</Text>
 								</View>
 							</Button>
@@ -161,7 +161,7 @@ export default function Login() {
 										<Svg name="apple" width={24} height={24} />
 									)}
 									<Text className="ml-2 text-center text-base font-semibold">
-										Sign in with Apple
+										Continue with Apple
 									</Text>
 								</View>
 							</Button>
