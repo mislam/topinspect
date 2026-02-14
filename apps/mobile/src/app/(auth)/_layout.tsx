@@ -1,6 +1,7 @@
 import { useEffect } from "react"
 
 import { useAuthStore } from "@the/auth/expo"
+import { colors } from "@the/ui/expo"
 
 import { Stack } from "expo-router"
 
@@ -17,7 +18,12 @@ export default function AuthLayout() {
 	// - Hooks that don't return error state (usePhoneSignIn, useSignupFlow) display errors via useAuthStore in their screens
 
 	return (
-		<Stack screenOptions={{ headerShown: false }}>
+		<Stack
+			screenOptions={{
+				headerShown: false,
+				contentStyle: { backgroundColor: colors.slate[900] },
+			}}
+		>
 			<Stack.Screen name="login" />
 			<Stack.Screen name="signup" />
 			<Stack.Screen name="otp" />

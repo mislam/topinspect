@@ -1,12 +1,15 @@
 import { useEffect, useRef } from "react"
 
 import { useAuthStore } from "@the/auth/expo"
-import { Alert, Toast } from "@the/ui/expo"
+import { Alert, colors, Toast } from "@the/ui/expo"
 import { registerDevMenu } from "@the/utils/expo"
 import { KeyboardProvider } from "react-native-keyboard-controller"
 
+import { useColorScheme } from "react-native"
+
 import { Stack, usePathname } from "expo-router"
 import * as SplashScreen from "expo-splash-screen"
+import * as SystemUI from "expo-system-ui"
 
 import "@/config/app.css"
 import "@/config/svg"
@@ -24,6 +27,7 @@ export default function RootLayout() {
 	const { isAuthenticated, isAuthLoading } = useAuthStore()
 	const pathname = usePathname()
 	const previousPathname = useRef(pathname)
+	const isDark = useColorScheme() === "dark"
 
 	// Register custom dev menu items
 	registerDevMenu(useAuthStore)
@@ -43,6 +47,13 @@ export default function RootLayout() {
 		}
 	}, [isAuthLoading])
 
+	// Root view background: dark on auth (login has dark bg image), follow system theme elsewhere
+	useEffect(() => {
+		if (isAuthLoading) return
+		const color = !isAuthenticated || isDark ? colors.slate[900] : colors.white
+		SystemUI.setBackgroundColorAsync(color)
+	}, [isAuthLoading, isAuthenticated, isDark])
+
 	// Don't render anything while loading auth state - splash screen will show
 	if (isAuthLoading) {
 		return null
@@ -50,7 +61,14 @@ export default function RootLayout() {
 
 	return (
 		<KeyboardProvider>
-			<Stack screenOptions={{ headerShown: false }}>
+			<Stack
+				screenOptions={{
+					headerShown: false,
+					contentStyle: {
+						backgroundColor: !isAuthenticated || isDark ? colors.slate[900] : colors.white,
+					},
+				}}
+			>
 				{/* Auth routes - only accessible when NOT authenticated */}
 				<Stack.Protected guard={!isAuthenticated}>
 					<Stack.Screen name="(auth)" />

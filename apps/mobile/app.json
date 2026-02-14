@@ -4,13 +4,13 @@
 		"version": "0.2.0",
 		"orientation": "portrait",
 		"icon": "./assets/expo/icon.png",
-		"backgroundColor": "#ffffff",
+		"backgroundColor": "#020617",
 		"userInterfaceStyle": "automatic",
 		"newArchEnabled": true,
 		"splash": {
 			"image": "./assets/expo/splash-icon.png",
 			"resizeMode": "contain",
-			"backgroundColor": "#ffffff"
+			"backgroundColor": "#020617"
 		},
 		"ios": {
 			"supportsTablet": true,
@@ -34,14 +34,10 @@
 			[
 				"expo-splash-screen",
 				{
-					"imageWidth": 200,
-					"resizeMode": "contain",
 					"image": "./assets/expo/splash-icon.png",
-					"backgroundColor": "#ffffff",
-					"dark": {
-						"image": "./assets/expo/splash-icon-dark.png",
-						"backgroundColor": "#020617"
-					}
+					"resizeMode": "contain",
+					"imageWidth": 200,
+					"backgroundColor": "#020617"
 				}
 			],
 			"expo-apple-authentication",
