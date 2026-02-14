@@ -8,7 +8,7 @@
 	"compatibility_date": "2025-08-23",
 
 	"observability": {
-		"enabled": true,
+		"enabled": true
 	},
 	/**
 	 * Smart Placement (enable to reduce cold starts and latency)
@@ -30,34 +30,34 @@
 		"local": {
 			"name": "topinspect-api-local",
 			"vars": {
-				"ENV": "development",
-			},
+				"ENV": "development"
+			}
 		},
 		"staging": {
 			"name": "topinspect-api-staging",
 			"vars": {
-				"ENV": "staging",
+				"ENV": "staging"
 			},
 			"routes": [
 				{
 					"pattern": "apistg.topinspect.app",
-					"custom_domain": true,
-				},
-			],
+					"custom_domain": true
+				}
+			]
 		},
 		"production": {
 			"name": "topinspect-api",
 			"vars": {
-				"ENV": "production",
+				"ENV": "production"
 			},
 			"routes": [
 				{
 					"pattern": "api.topinspect.app",
-					"custom_domain": true,
-				},
-			],
-		},
-	},
+					"custom_domain": true
+				}
+			]
+		}
+	}
 
 	/**
 	 * Bindings
