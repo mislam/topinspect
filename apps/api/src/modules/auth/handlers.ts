@@ -10,7 +10,7 @@ import {
 import { capitalizeFirst, getArticle } from "@the/utils/shared"
 import { and, eq } from "drizzle-orm"
 import { sign } from "hono/jwt"
-import { createRemoteJWKSet, jwtVerify } from "jose"
+import { createRemoteJWKSet, decodeJwt, jwtVerify } from "jose"
 
 import { AUTH_CONFIG } from "./config"
 
@@ -435,10 +435,26 @@ const OAUTH_VERIFIER_CONFIGS: Record<"google" | "apple", OAuthVerifierConfig> = 
 const verifyOAuthJWT = async (
 	token: string,
 	config: OAuthVerifierConfig,
+	env: string,
 ): Promise<Record<string, unknown>> => {
+	// Local dev: Apple JWKS fetch returns 403 from wrangler dev. Decode without verification.
+	if (env === "development" && config.providerName === "Apple") {
+		const payload = decodeJwt(token) as Record<string, unknown>
+		const issuer = Array.isArray(config.issuer) ? config.issuer : [config.issuer]
+		if (!issuer.includes(payload.iss as string)) {
+			throw new Error("Invalid issuer")
+		}
+		if (
+			payload.exp &&
+			typeof payload.exp === "number" &&
+			payload.exp < Math.floor(Date.now() / 1000)
+		) {
+			throw new Error("Token expired")
+		}
+		return payload
+	}
 	const { payload } = await jwtVerify(token, config.jwks, {
 		issuer: config.issuer as string | string[],
-		// audience: optional - add GOOGLE_CLIENT_ID / APPLE_CLIENT_ID env when available
 	})
 	return payload as Record<string, unknown>
 }
@@ -453,7 +469,11 @@ const createOAuthSignInHandler = (provider: OAuthProvider): Handler<typeof oauth
 
 		let claims: Record<string, unknown>
 		try {
-			claims = await verifyOAuthJWT(idToken, OAUTH_VERIFIER_CONFIGS[provider])
+			claims = await verifyOAuthJWT(
+				idToken,
+				OAUTH_VERIFIER_CONFIGS[provider],
+				getEnv(c).ENV ?? "production",
+			)
 		} catch (error) {
 			return res.unauthorized(c, error instanceof Error ? error.message : invalidTokenMessage)
 		}
