@@ -11,3 +11,4 @@ bun.lockb
 /apps/api/dist/
 /apps/mobile/ios/
 /apps/mobile/android/
+/apps/web/static/

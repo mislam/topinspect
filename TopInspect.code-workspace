@@ -4,6 +4,7 @@
 		{ "path": "./packages" },
 		{ "path": "./apps/api" },
 		{ "path": "./apps/mobile" },
+		{ "path": "./apps/web" },
 	],
 	"settings": {
 		"editor.defaultFormatter": "esbenp.prettier-vscode",

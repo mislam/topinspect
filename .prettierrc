@@ -4,11 +4,17 @@
 	"singleQuote": false,
 	"trailingComma": "all",
 	"printWidth": 100,
-	"plugins": ["prettier-plugin-tailwindcss"],
+	"plugins": ["prettier-plugin-svelte", "prettier-plugin-tailwindcss"],
 	"overrides": [
 		{
 			"files": ["*.json", "*.jsonc"],
 			"options": { "trailingComma": "none" }
+		},
+		{
+			"files": "*.svelte",
+			"options": {
+				"parser": "svelte"
+			}
 		}
 	]
 }
