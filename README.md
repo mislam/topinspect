@@ -100,9 +100,10 @@ We use Cloudflare Tunnel to expose our local development environments over a pub
    Create four DNS CNAME records to the tunnel:
 
    ```bash
-   cloudflared tunnel route dns localtest www
    cloudflared tunnel route dns localtest api
+   cloudflared tunnel route dns localtest app
    cloudflared tunnel route dns localtest media
+   cloudflared tunnel route dns localtest www
    ```
 
 6. **Configure Tunnel Routes**
@@ -114,10 +115,10 @@ We use Cloudflare Tunnel to expose our local development environments over a pub
    credentials-file: ~/.cloudflared/localtest.json
 
    ingress:
-   - hostname: www.localtest.cc      # <- SvelteKit app
-      service: http://localhost:5173
    - hostname: api.localtest.cc      # <- Hono API
       service: http://localhost:8787
+   - hostname: app.localtest.cc      # <- SvelteKit web app
+      service: http://localhost:5173
    - hostname: media.localtest.cc    # <- MinIO
       service: http://localhost:9000
    - service: http_status:404        # <- Not found
@@ -133,7 +134,9 @@ We use Cloudflare Tunnel to expose our local development environments over a pub
    - Go to `Rules` and create a new `Cache Rule`.
    - Name it `Bypass cache for web`.
    - Use custom filter expression when:
-     - `Hostname` `equals` to `www.localtest.cc`
+     - `Hostname` → `is in`:
+       - `www.localtest.cc`
+       - `app.localtest.cc`
    - Then `Bypass cache`. Also set `Browser TTL` to `Bypass cache`.
 
 9. **Run Tunnel:**
@@ -223,3 +226,4 @@ The development environment includes:
 - [API Documentation](apps/api/README.md)
 - [Authentication Guide](apps/api/docs/auth.md)
 - [SMS Provider Guide](apps/api/docs/sms.md)
+- [Email Provider Guide](apps/api/docs/email.md)

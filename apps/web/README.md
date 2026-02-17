@@ -2,7 +2,10 @@
 
 SvelteKit web application with Svelte 5, TypeScript, and Tailwind CSS v4.
 
-> **Part of Monorepo** - This app connects to the [Hono API](../api) for backend operations. See also the [Mobile App](../mobile).
+## How to access
+
+Run `pnpm dev:web` from project root.
+Open [https://app.localtest.cc](https://app.localtest.cc) (requires [Cloudflare Tunnel](../../README.md#cloudflare-tunnel)).
 
 ## Tech Stack
 

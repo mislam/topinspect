@@ -4,6 +4,9 @@ import { defineConfig } from "vitest/config"
 
 export default defineConfig({
 	plugins: [tailwindcss(), sveltekit()],
+	server: {
+		allowedHosts: ["app.localtest.cc"],
+	},
 	test: {
 		expect: { requireAssertions: true },
 		projects: [

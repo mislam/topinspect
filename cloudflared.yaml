@@ -2,10 +2,10 @@ tunnel: localtest
 credentials-file: ~/.cloudflared/localtest.json
 
 ingress:
-  - hostname: www.localtest.cc # <- SvelteKit app
-    service: http://localhost:5173
   - hostname: api.localtest.cc # <- Hono API
     service: http://localhost:8787
+  - hostname: app.localtest.cc # <- SvelteKit web app
+    service: http://localhost:5173
   - hostname: media.localtest.cc # <- MinIO
     service: http://localhost:9000
   - service: http_status:404 # <- Not found
