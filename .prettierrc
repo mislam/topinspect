@@ -15,6 +15,12 @@
 			"options": {
 				"parser": "svelte"
 			}
+		},
+		{
+			"files": ["apps/web/**/*.svelte", "apps/web/**/*.css"],
+			"options": {
+				"tailwindStylesheet": "./apps/web/src/routes/layout.css"
+			}
 		}
 	]
 }
