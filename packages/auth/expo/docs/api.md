@@ -2,7 +2,7 @@
 
 ## Overview
 
-The `@the/auth/expo` package includes a sophisticated API client built on Axios that provides automatic authentication, token management, error handling, and device information injection. The client fully integrates with the [Hono API](../../../apps/api) and implements all the security and error handling patterns.
+The `@prism/auth/expo` package includes a sophisticated API client built on Axios that provides automatic authentication, token management, error handling, and device information injection. The client fully integrates with the [Hono API](../../../apps/api) and implements all the security and error handling patterns.
 
 ## API Client Configuration
 
@@ -321,7 +321,7 @@ import {
 	type PhoneSignInRequest,
 	type TokenResponse,
 	type ErrorResponse,
-} from "@the/types"
+} from "@prism/types"
 ```
 
 **Type-Safe API Calls:**
@@ -415,7 +415,7 @@ logger.debug(`${errorCode}: ${errorMessage}`)
 
 The API client fully integrates with the [Hono API](../../../apps/api):
 
-- **Shared Types**: Uses `@the/types` for type safety
+- **Shared Types**: Uses `@prism/types` for type safety
 - **Consistent Error Handling**: Matches backend error format
 - **Authentication Flow**: Implements same auth patterns
 - **Device Information**: Sends comprehensive device data

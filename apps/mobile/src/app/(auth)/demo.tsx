@@ -13,8 +13,8 @@ import {
 	Svg,
 	Text,
 	TextInput,
-} from "@the/ui/expo"
-import { logger } from "@the/utils/expo"
+} from "@prism/ui/expo"
+import { logger } from "@prism/utils/expo"
 
 import { ScrollView, View } from "react-native"
 

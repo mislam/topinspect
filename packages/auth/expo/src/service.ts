@@ -4,9 +4,9 @@ import {
 	type OtpRequest,
 	type PhoneSignInRequest,
 	type PhoneSignupRequest,
-} from "@the/schemas"
-import { type OtpResponse, type TokenResponse } from "@the/types"
-import { getDeviceInfo } from "@the/utils/expo"
+} from "@prism/schemas"
+import { type OtpResponse, type TokenResponse } from "@prism/types"
+import { getDeviceInfo } from "@prism/utils/expo"
 
 import { api, logOut, refreshTokens } from "./api"
 import { useAuthStore } from "./store"

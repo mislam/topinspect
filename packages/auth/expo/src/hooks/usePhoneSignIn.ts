@@ -1,7 +1,7 @@
 import { useEffect, useRef, useState } from "react"
 
-import { otpRequestSchema } from "@the/schemas"
-import { useForm } from "@the/utils/expo"
+import { otpRequestSchema } from "@prism/schemas"
+import { useForm } from "@prism/utils/expo"
 
 import { type TextInput as RNTextInput } from "react-native"
 

@@ -1,4 +1,4 @@
-import { Text } from "@the/ui/expo"
+import { Text } from "@prism/ui/expo"
 
 import { View } from "react-native"
 

@@ -14,7 +14,7 @@
 
 import { type ComponentRef, forwardRef, memo, useMemo } from "react"
 
-import { logger } from "@the/utils/expo"
+import { logger } from "@prism/utils/expo"
 
 import { useColorScheme } from "react-native"
 
@@ -45,7 +45,7 @@ export interface SvgProps {
  *
  * @example
  * ```tsx
- * import { registerSvgAssets } from "@the/ui/expo"
+ * import { registerSvgAssets } from "@prism/ui/expo"
  * import logo from "./assets/logo.svg"
  * import icon from "./assets/icon.svg"
  *

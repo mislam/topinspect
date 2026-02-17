@@ -1,5 +1,5 @@
-import { useAuthStore } from "@the/auth/expo"
-import { Button, Text } from "@the/ui/expo"
+import { useAuthStore } from "@prism/auth/expo"
+import { Button, Text } from "@prism/ui/expo"
 
 import { View } from "react-native"
 

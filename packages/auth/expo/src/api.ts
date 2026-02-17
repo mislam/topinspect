@@ -1,6 +1,11 @@
-import { type LogoutRequest, type RefreshTokensRequest } from "@the/schemas"
-import { type ErrorResponse, type JwtPayload, type TokenResponse, UNKNOWN_ERROR } from "@the/types"
-import { logger } from "@the/utils/expo"
+import { type LogoutRequest, type RefreshTokensRequest } from "@prism/schemas"
+import {
+	type ErrorResponse,
+	type JwtPayload,
+	type TokenResponse,
+	UNKNOWN_ERROR,
+} from "@prism/types"
+import { logger } from "@prism/utils/expo"
 import axios, { type AxiosError, type AxiosResponse, type InternalAxiosRequestConfig } from "axios"
 import { jwtDecode } from "jwt-decode"
 

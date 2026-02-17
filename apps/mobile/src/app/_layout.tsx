@@ -1,8 +1,8 @@
 import { useEffect, useRef } from "react"
 
-import { useAuthStore } from "@the/auth/expo"
-import { Alert, colors, Toast } from "@the/ui/expo"
-import { registerDevMenu } from "@the/utils/expo"
+import { useAuthStore } from "@prism/auth/expo"
+import { Alert, colors, Toast } from "@prism/ui/expo"
+import { registerDevMenu } from "@prism/utils/expo"
 import { KeyboardProvider } from "react-native-keyboard-controller"
 
 import { useColorScheme } from "react-native"

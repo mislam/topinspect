@@ -1,7 +1,7 @@
 import { useEffect } from "react"
 
-import { type SignupScreenParams, useAuthStore, useSignupFlow } from "@the/auth/expo"
-import { Alert, BackButton, Button, colors, Picker, Svg, Text, TextInput } from "@the/ui/expo"
+import { type SignupScreenParams, useAuthStore, useSignupFlow } from "@prism/auth/expo"
+import { Alert, BackButton, Button, colors, Picker, Svg, Text, TextInput } from "@prism/ui/expo"
 import { KeyboardAwareScrollView } from "react-native-keyboard-controller"
 import { useSafeAreaInsets } from "react-native-safe-area-context"
 

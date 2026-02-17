@@ -2,16 +2,16 @@
 
 ## Overview
 
-The `@the/auth/expo` package provides a comprehensive OTP-based authentication system for Expo/React Native applications. It fully integrates with the [Hono API](../../../apps/api) and provides secure, user-friendly authentication with automatic token refresh and robust error handling.
+The `@prism/auth/expo` package provides a comprehensive OTP-based authentication system for Expo/React Native applications. It fully integrates with the [Hono API](../../../apps/api) and provides secure, user-friendly authentication with automatic token refresh and robust error handling.
 
 ## Installation
 
 ```bash
 # Add to your app's package.json
-pnpm add @the/auth/expo
+pnpm add @prism/auth/expo
 
 # Or if using npm
-npm install @the/auth/expo
+npm install @prism/auth/expo
 ```
 
 ## Quick Start
@@ -28,7 +28,7 @@ import {
 	useSignupFlow,
 	useOtpFlow,
 	useAuthStore,
-} from "@the/auth/expo"
+} from "@prism/auth/expo"
 
 // Phone sign-in hook
 const { form, isLoading, handleSendOtp } = usePhoneSignIn()
@@ -61,7 +61,7 @@ import {
 	signUpWithPhone,
 	logOut,
 	api,
-} from "@the/auth/expo"
+} from "@prism/auth/expo"
 
 // Use the auth store
 const { isAuthenticated, isLoading, error } = useAuthStore()
@@ -106,8 +106,8 @@ The package provides hooks for building custom authentication UI. This follows a
 ### Example: Building a Login Screen
 
 ```typescript
-import { usePhoneSignIn, useGoogleSignIn, useAppleSignIn } from "@the/auth/expo"
-import { Button, TextInput } from "@the/ui/expo"
+import { usePhoneSignIn, useGoogleSignIn, useAppleSignIn } from "@prism/auth/expo"
+import { Button, TextInput } from "@prism/ui/expo"
 
 export default function Login() {
   const phoneSignIn = usePhoneSignIn()
@@ -266,7 +266,7 @@ The package automatically collects and sends device information for security tra
 ## Package Structure
 
 ```
-@the/auth/expo/
+@prism/auth/expo/
 ├── src/
 │   ├── index.ts         # Main exports
 │   ├── api.ts           # Axios client + token management
@@ -298,7 +298,7 @@ This package follows a **headless architecture** pattern where business logic is
 
 #### 1. Separation of Concerns
 
-- **Package (`@the/auth/expo`)**: Business logic, state management, API calls, validation
+- **Package (`@prism/auth/expo`)**: Business logic, state management, API calls, validation
 - **App (`apps/mobile`)**: UI, styling, layout, text content, navigation structure
 
 #### 2. Headless Components Pattern
@@ -335,7 +335,7 @@ The following routes are defined in `AUTH_ROUTES`:
 
 **Trade-off**: This couples the package to Expo Router's routing structure, but this is acceptable given:
 
-1. The package is Expo-specific (`@the/auth/expo`)
+1. The package is Expo-specific (`@prism/auth/expo`)
 2. Expo Router is the standard routing solution for Expo apps
 3. The simplicity benefit outweighs the coupling cost
 4. **Improved**: Centralizing routes reduces duplication and makes changes easier
@@ -457,7 +457,7 @@ The package includes development tools for debugging authentication:
 
 The package fully complies with the [Hono API authentication system](../../../apps/api/docs/auth.md):
 
-- **Shared Types**: Uses `@the/types` package for type safety
+- **Shared Types**: Uses `@prism/types` package for type safety
 - **Consistent Error Handling**: Matches backend error response format
 - **Device Information**: Sends comprehensive device data
 - **Token Management**: Implements same token refresh strategy
@@ -495,8 +495,8 @@ Required environment variables:
 
 The package depends on:
 
-- `@the/types` - Shared type definitions
-- `@the/utils/expo` - Expo utilities
+- `@prism/types` - Shared type definitions
+- `@prism/utils/expo` - Expo utilities
 - `axios` - HTTP client
 - `jwt-decode` - JWT token decoding
 - `zustand` - State management
@@ -507,5 +507,5 @@ The package depends on:
 The package is fully typed and exports all necessary types:
 
 ```typescript
-import type { AuthStore, AuthState, UIState } from "@the/auth/expo"
+import type { AuthStore, AuthState, UIState } from "@prism/auth/expo"
 ```

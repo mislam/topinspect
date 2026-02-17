@@ -1,7 +1,7 @@
 import { useEffect } from "react"
 
-import { type OtpScreenParams, useOtpFlow } from "@the/auth/expo"
-import { Alert, BackButton, Button, OtpInput, Text } from "@the/ui/expo"
+import { type OtpScreenParams, useOtpFlow } from "@prism/auth/expo"
+import { Alert, BackButton, Button, OtpInput, Text } from "@prism/ui/expo"
 import { KeyboardAwareScrollView } from "react-native-keyboard-controller"
 import { useSafeAreaInsets } from "react-native-safe-area-context"
 

@@ -1,5 +1,5 @@
 {
-	"name": "@the/auth/expo",
+	"name": "@prism/auth/expo",
 	"version": "0.2.0",
 	"private": true,
 	"main": "src/index.ts",
@@ -10,11 +10,11 @@
 		"lint:fix": "eslint src --fix"
 	},
 	"dependencies": {
-		"@the/schemas": "workspace:*",
-		"@the/types": "workspace:*",
-		"@the/ui/expo": "workspace:*",
-		"@the/utils/expo": "workspace:*",
-		"@the/utils/shared": "workspace:*",
+		"@prism/schemas": "workspace:*",
+		"@prism/types": "workspace:*",
+		"@prism/ui/expo": "workspace:*",
+		"@prism/utils/expo": "workspace:*",
+		"@prism/utils/shared": "workspace:*",
 		"axios": "^1.11.0",
 		"jwt-decode": "^4.0.0",
 		"zustand": "^5.0.7"

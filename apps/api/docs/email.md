@@ -1,6 +1,6 @@
 # Email - API Documentation
 
-**Package**: `@the/email`  
+**Package**: `@prism/email`  
 **Adapter**: `@/adapters/email`
 
 > **Overview**: Pluggable email sending via Mailpit (local), Postmark, or Resend. Uses React Email for templates.

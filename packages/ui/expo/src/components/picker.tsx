@@ -1,6 +1,6 @@
 import { forwardRef, memo, useEffect, useImperativeHandle, useMemo, useState } from "react"
 
-import { cn } from "@the/utils/expo"
+import { cn } from "@prism/utils/expo"
 import { useSafeAreaInsets } from "react-native-safe-area-context"
 
 import {

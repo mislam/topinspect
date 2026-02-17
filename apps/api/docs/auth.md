@@ -141,7 +141,7 @@ sequenceDiagram
 - **Business logic handlers** live in `src/handlers` (e.g., `users`, `upload`, etc.)
 - **Cross-cutting/auth-only logic** lives in `src/modules/auth` (handlers, middleware, config, types)
 - **Shared middlewares** in `src/middlewares`, **shared utilities** in `src/utils`, **external adapters** in `src/adapters`
-- **Shared types** are defined in the `@the/types` package and imported where needed
+- **Shared types** are defined in the `@prism/types` package and imported where needed
 - This separation keeps business routes independent from authentication internals and avoids tight coupling
 
 ### API Reference

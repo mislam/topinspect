@@ -1,8 +1,8 @@
 import { useEffect, useRef, useState } from "react"
 
-import { oauthSignupSchema, phoneSignupSchema } from "@the/schemas"
-import { useForm } from "@the/utils/expo"
-import { capitalizeWords } from "@the/utils/shared"
+import { oauthSignupSchema, phoneSignupSchema } from "@prism/schemas"
+import { useForm } from "@prism/utils/expo"
+import { capitalizeWords } from "@prism/utils/shared"
 
 import { router } from "expo-router"
 
@@ -13,7 +13,7 @@ import { useAuthStore } from "../store"
 import { navigateToHome } from "./utils"
 
 import type { SignupScreenParams } from "../config"
-import type { PickerItem, PickerRef } from "@the/ui/expo"
+import type { PickerItem, PickerRef } from "@prism/ui/expo"
 
 export type SignupStep = "name" | "birthYear" | "gender"
 

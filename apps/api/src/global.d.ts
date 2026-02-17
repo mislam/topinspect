@@ -1,4 +1,4 @@
-import "@the/types"
+import "@prism/types"
 
 // User context types
 interface UserContext {

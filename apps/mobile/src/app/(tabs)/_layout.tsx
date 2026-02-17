@@ -1,5 +1,5 @@
+import { colors, Svg } from "@prism/ui/expo"
 import { PlatformPressable } from "@react-navigation/elements"
-import { colors, Svg } from "@the/ui/expo"
 
 import { useColorScheme } from "react-native"
 

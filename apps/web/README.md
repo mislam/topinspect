@@ -1,4 +1,4 @@
-# Web App
+# SvelteKit Web App
 
 SvelteKit web application with Svelte 5, TypeScript, and Tailwind CSS v4.
 
@@ -32,7 +32,7 @@ src/
 
 ## Scripts
 
-Run from monorepo root (e.g. `pnpm --filter @the/web <script>`) or from `apps/web`:
+Run from monorepo root (e.g. `pnpm --filter @prism/web <script>`) or from `apps/web`:
 
 | Script       | Description               |
 | ------------ | ------------------------- |

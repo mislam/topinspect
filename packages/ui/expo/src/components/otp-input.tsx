@@ -1,6 +1,6 @@
 import { forwardRef, memo, useImperativeHandle, useRef, useState } from "react"
 
-import { cn, logger } from "@the/utils/expo"
+import { cn, logger } from "@prism/utils/expo"
 
 import {
 	TextInput as RNTextInput,

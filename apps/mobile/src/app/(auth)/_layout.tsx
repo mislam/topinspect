@@ -1,7 +1,7 @@
 import { useEffect } from "react"
 
-import { useAuthStore } from "@the/auth/expo"
-import { colors } from "@the/ui/expo"
+import { useAuthStore } from "@prism/auth/expo"
+import { colors } from "@prism/ui/expo"
 
 import { Stack } from "expo-router"
 

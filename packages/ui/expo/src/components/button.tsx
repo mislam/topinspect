@@ -1,6 +1,6 @@
 import { type ComponentRef, forwardRef, memo, type ReactNode, useMemo } from "react"
 
-import { cn } from "@the/utils/expo"
+import { cn } from "@prism/utils/expo"
 
 import { TouchableOpacity, type TouchableOpacityProps } from "react-native"
 

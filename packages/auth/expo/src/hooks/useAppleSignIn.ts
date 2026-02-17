@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react"
 
-import { logger } from "@the/utils/expo"
+import { logger } from "@prism/utils/expo"
 
 import { Platform } from "react-native"
 

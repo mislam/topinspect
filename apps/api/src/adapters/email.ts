@@ -1,6 +1,6 @@
-import { MailpitProvider, PostmarkProvider, ResendProvider } from "@the/email"
+import { MailpitProvider, PostmarkProvider, ResendProvider } from "@prism/email"
 
-import type { EmailOptions, EmailProvider } from "@the/email"
+import type { EmailOptions, EmailProvider } from "@prism/email"
 import type { Context } from "hono"
 
 import { getEnv, isDev } from "@/utils/env"

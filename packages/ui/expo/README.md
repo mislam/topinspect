@@ -1,4 +1,4 @@
-# @the/ui/expo
+# @prism/ui/expo
 
 A reusable UI component library for React Native Expo apps, featuring theme-aware components with advanced memoization and optimization strategies.
 
@@ -13,7 +13,7 @@ A reusable UI component library for React Native Expo apps, featuring theme-awar
 ## Installation
 
 ```bash
-pnpm add @the/ui/expo
+pnpm add @prism/ui/expo
 ```
 
 ## Quick Start
@@ -24,7 +24,7 @@ Each app needs to register its own SVG assets:
 
 ```tsx
 // src/config/svg.ts
-import { registerSvgAssets } from "@the/ui/expo"
+import { registerSvgAssets } from "@prism/ui/expo"
 
 // Import SVG assets
 import female from "../../assets/icons/female.svg"
@@ -45,7 +45,7 @@ registerSvgAssets({
 // src/app/_layout.tsx
 import "@/config/app.css"
 import "@/config/svg" // Register SVG assets
-import { Alert, Toast } from "@the/ui/expo"
+import { Alert, Toast } from "@prism/ui/expo"
 
 export default function RootLayout() {
 	return <Stack>{/* Your app screens */}</Stack>
@@ -56,7 +56,7 @@ export default function RootLayout() {
 
 ```tsx
 // src/app/(auth)/login.tsx
-import { Alert, Button, Svg, Text, TextInput } from "@the/ui/expo"
+import { Alert, Button, Svg, Text, TextInput } from "@prism/ui/expo"
 import { View } from "react-native"
 
 export default function LoginScreen() {
@@ -76,7 +76,7 @@ export default function LoginScreen() {
 A flexible SVG component that works with app-specific assets.
 
 ```tsx
-import { Svg } from "@the/ui/expo"
+import { Svg } from "@prism/ui/expo"
 
 // Basic usage
 <Svg name="logo" width={64} height={64} />
@@ -111,7 +111,7 @@ import {
   Picker,
   OtpInput,
   colors
-} from "@the/ui/expo"
+} from "@prism/ui/expo"
 
 // Use components with theme support
 // Button automatically wraps string children in Text
@@ -143,7 +143,7 @@ This library is designed to work across multiple Expo apps in a monorepo:
 
 ```tsx
 // apps/mobile-app1/src/config/svg.ts
-import { registerSvgAssets } from "@the/ui/expo"
+import { registerSvgAssets } from "@prism/ui/expo"
 
 // Import SVG assets
 import female from "../../assets/icons/female.svg"
@@ -162,7 +162,7 @@ registerSvgAssets({
 
 ```tsx
 // apps/mobile-app2/src/config/svg.ts
-import { registerSvgAssets } from "@the/ui/expo"
+import { registerSvgAssets } from "@prism/ui/expo"
 
 // Import SVG assets
 import cart from "../../assets/icons/cart.svg"
@@ -207,7 +207,7 @@ Get all registered SVG names (useful for debugging).
 **Example:**
 
 ```tsx
-import { getRegisteredSvgNames } from "@the/ui/expo"
+import { getRegisteredSvgNames } from "@prism/ui/expo"
 
 // Get all registered SVG names
 const registeredSvgs = getRegisteredSvgNames()
@@ -358,7 +358,7 @@ The Button component automatically wraps string and number children in a `<Text>
 #### **Usage**
 
 ```tsx
-import { Button, Text } from "@the/ui/expo"
+import { Button, Text } from "@prism/ui/expo"
 
 // Basic usage - strings are automatically wrapped in Text
 <Button onPress={handlePress}>Click me</Button>
@@ -416,7 +416,7 @@ interface TextProps {
 #### **Usage**
 
 ```tsx
-import { Text } from "@the/ui/expo"
+import { Text } from "@prism/ui/expo"
 
 // Basic usage
 <Text>Enter your phone number</Text>
@@ -456,7 +456,7 @@ interface TextInputProps {
 #### **Usage**
 
 ```tsx
-import { TextInput } from "@the/ui/expo"
+import { TextInput } from "@prism/ui/expo"
 
 // Basic usage
 <TextInput placeholder="Enter your email" className="mb-4" />
@@ -512,7 +512,7 @@ interface OtpInputRef {
 #### **Usage**
 
 ```tsx
-import { OtpInput, type OtpInputRef, Text, Button } from "@the/ui/expo"
+import { OtpInput, type OtpInputRef, Text, Button } from "@prism/ui/expo"
 import { useRef, useState } from "react"
 import { View } from "react-native"
 
@@ -580,7 +580,7 @@ interface IconProps {
 #### **Usage**
 
 ```tsx
-import { Icon } from "@the/ui/expo"
+import { Icon } from "@prism/ui/expo"
 
 // Basic usage (automatic theming)
 <Icon name="person" />
@@ -633,7 +633,7 @@ interface AlertProps {
 #### **Usage**
 
 ```tsx
-import { Alert, Toast } from "@the/ui/expo"
+import { Alert, Toast } from "@prism/ui/expo"
 
 // Inline Alert (static, persistent)
 <Alert
@@ -708,7 +708,7 @@ interface PickerRef {
 #### **Usage**
 
 ```tsx
-import { Picker, type PickerRef, type PickerItem, Button } from "@the/ui/expo"
+import { Picker, type PickerRef, type PickerItem, Button } from "@prism/ui/expo"
 import { useRef, useState } from "react"
 import { View } from "react-native"
 

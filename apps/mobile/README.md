@@ -28,9 +28,6 @@ pnpm dev:api
 
 # Start Expo dev server (new terminal)
 pnpm dev:mobile
-
-# Start SvelteKit dev server (new terminal)
-pnpm dev:web
 ```
 
 ### Dev Client Setup (One-time)
@@ -87,7 +84,7 @@ pnpm dev:install:android
 └── package.json      # Dependencies
 ```
 
-**Note:** Authentication functionality is provided by the `@the/auth/expo` package, which includes:
+**Note:** Authentication functionality is provided by the `@prism/auth/expo` package, which includes:
 
 - Auth store and state management
 - API client with automatic token handling
@@ -128,7 +125,7 @@ pnpm dev:install:android
 **Store Usage:**
 
 ```typescript
-import { useAuthStore } from "@the/auth/expo"
+import { useAuthStore } from "@prism/auth/expo"
 
 function MyComponent() {
   const { isAuthenticated, isLoading, error } = useAuthStore()
@@ -143,7 +140,7 @@ function MyComponent() {
 **Service Functions:**
 
 ```typescript
-import { sendOtp, signInWithPhone } from "@the/auth/expo"
+import { sendOtp, signInWithPhone } from "@prism/auth/expo"
 
 async function handleLogin() {
 	try {
@@ -181,7 +178,7 @@ export function MyComponent({ title, onPress }: Props) {
 
 ```typescript
 import { useState, useEffect } from "react"
-import { useAuthStore } from "@the/auth/expo"
+import { useAuthStore } from "@prism/auth/expo"
 
 export function useAuthStatus() {
 	const { isAuthenticated, isAuthLoading } = useAuthStore()
@@ -256,7 +253,7 @@ export function useAuthStatus() {
 **Shared Types:**
 
 ```typescript
-import { type OtpRequest, type TokenResponse } from "@the/types"
+import { type OtpRequest, type TokenResponse } from "@prism/types"
 
 // Use shared types for API calls
 const request: OtpRequest = {
@@ -446,7 +443,7 @@ This app uses several packages:
 Use `@/*` for `./src/*` imports:
 
 ```typescript
-import { useAuthStore, api } from "@the/auth/expo"
+import { useAuthStore, api } from "@prism/auth/expo"
 ```
 
 ## Troubleshooting

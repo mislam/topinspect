@@ -1,7 +1,7 @@
 import { eq } from "drizzle-orm"
 import { verify } from "hono/jwt"
 
-import type { JwtPayload } from "@the/types"
+import type { JwtPayload } from "@prism/types"
 import type { Context, Next } from "hono"
 
 import { getDb } from "@/adapters/database"

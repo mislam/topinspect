@@ -1,4 +1,4 @@
-import type { ErrorResponse } from "@the/types"
+import type { ErrorResponse } from "@prism/types"
 import type { Context } from "hono"
 import type { ContentfulStatusCode, StatusCode } from "hono/utils/http-status"
 

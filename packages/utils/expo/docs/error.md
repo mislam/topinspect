@@ -56,7 +56,7 @@ All error responses follow a consistent structure that matches the backend API:
 Use the `useForm` hook with Zod schemas for client-side validation:
 
 ```typescript
-import { useForm } from "@the/utils/expo"
+import { useForm } from "@prism/utils/expo"
 import { z } from "zod"
 
 const schema = z.object({
@@ -97,7 +97,7 @@ function MyForm() {
 Handle API errors using toast notifications:
 
 ```typescript
-import { Alert } from "@the/ui/expo"
+import { Alert } from "@prism/ui/expo"
 
 async function fetchData() {
 	try {
@@ -128,7 +128,7 @@ async function fetchData() {
 Use the logger for structured error logging:
 
 ```typescript
-import { logger } from "@the/utils/expo"
+import { logger } from "@prism/utils/expo"
 
 try {
 	await performOperation()
@@ -179,7 +179,7 @@ The error handling system integrates with the [Hono API error handling](../../..
 
 This error handling guide works with the following packages:
 
-- **`@the/utils/expo`**: Form validation (`useForm`), logging utilities
-- **`@the/types`**: Shared error response types
-- **`@the/ui/expo`**: Error display components (`Alert.toast`)
-- **`@the/auth/expo`**: Authentication error handling (if using auth features)
+- **`@prism/utils/expo`**: Form validation (`useForm`), logging utilities
+- **`@prism/types`**: Shared error response types
+- **`@prism/ui/expo`**: Error display components (`Alert.toast`)
+- **`@prism/auth/expo`**: Authentication error handling (if using auth features)

@@ -12,7 +12,7 @@ import {
 	Section,
 	Tailwind,
 	Text,
-} from "@the/email"
+} from "@prism/email"
 
 interface Props {
 	appName: string

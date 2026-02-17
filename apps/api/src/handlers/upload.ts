@@ -1,4 +1,4 @@
-import { directUploadQuerySchema, presignedUrlSchema } from "@the/schemas"
+import { directUploadQuerySchema, presignedUrlSchema } from "@prism/schemas"
 
 import { requireAuth } from "../modules/auth/middleware"
 

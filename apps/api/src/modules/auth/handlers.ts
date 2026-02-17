@@ -6,8 +6,8 @@ import {
 	phoneSignInSchema,
 	phoneSignupSchema,
 	refreshTokensSchema,
-} from "@the/schemas"
-import { capitalizeFirst, getArticle } from "@the/utils/shared"
+} from "@prism/schemas"
+import { capitalizeFirst, getArticle } from "@prism/utils/shared"
 import { and, eq } from "drizzle-orm"
 import { sign } from "hono/jwt"
 import { createRemoteJWKSet, decodeJwt, jwtVerify } from "jose"
@@ -16,8 +16,8 @@ import { AUTH_CONFIG } from "./config"
 
 import type { OtpVerificationResult } from "./types"
 import type { Handler } from "@/utils/validation"
-import type { DeviceInfo } from "@the/schemas"
-import type { OtpResponse, TokenResponse } from "@the/types"
+import type { DeviceInfo } from "@prism/schemas"
+import type { OtpResponse, TokenResponse } from "@prism/types"
 import type { Context, Hono } from "hono"
 
 import { getDb } from "@/adapters/database"

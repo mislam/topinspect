@@ -1,5 +1,5 @@
 {
-	"name": "@the/email",
+	"name": "@prism/email",
 	"version": "0.2.0",
 	"private": true,
 	"main": "src/index.ts",

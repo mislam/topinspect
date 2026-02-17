@@ -9,7 +9,7 @@ Modern TypeScript-first API built with Hono v4.8.10 for Cloudflare Workers. Targ
 - **Database**: Neon Postgres with Drizzle ORM v0.44.4
 - **Authentication**: SMS OTP with access token + refresh token strategy
 - **Validation**: Zod schemas with centralized validation utilities and type-safe request handling
-- **Types**: Shared type definitions via `@the/types` package
+- **Types**: Shared type definitions via `@prism/types` package
 
 ## Project Structure
 

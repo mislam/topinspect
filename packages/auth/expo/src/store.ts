@@ -1,4 +1,4 @@
-import { logger, secureStorage } from "@the/utils/expo"
+import { logger, secureStorage } from "@prism/utils/expo"
 import { create } from "zustand"
 import { createJSONStorage, persist } from "zustand/middleware"
 

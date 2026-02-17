@@ -1,7 +1,7 @@
 import { useEffect } from "react"
 
-import { useAppleSignIn, useAuthStore, useGoogleSignIn, usePhoneSignIn } from "@the/auth/expo"
-import { Alert, Button, colors, Svg, Text, TextInput } from "@the/ui/expo"
+import { useAppleSignIn, useAuthStore, useGoogleSignIn, usePhoneSignIn } from "@prism/auth/expo"
+import { Alert, Button, colors, Svg, Text, TextInput } from "@prism/ui/expo"
 import { KeyboardAwareScrollView } from "react-native-keyboard-controller"
 import { useSafeAreaInsets } from "react-native-safe-area-context"
 

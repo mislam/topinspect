@@ -14,7 +14,7 @@ import {
 // Import auth store dynamically to avoid module loading issues
 const getAuthStore = () => {
 	try {
-		const { useAuthStore } = require("@the/auth/expo")
+		const { useAuthStore } = require("@prism/auth/expo")
 		return useAuthStore
 	} catch (error) {
 		console.warn("Failed to load auth store:", error)

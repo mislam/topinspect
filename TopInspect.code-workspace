@@ -1,6 +1,6 @@
 {
 	"folders": [
-		{ "path": "." },
+		{ "name": "root", "path": "." },
 		{ "path": "./packages" },
 		{ "path": "./apps/api" },
 		{ "path": "./apps/mobile" },

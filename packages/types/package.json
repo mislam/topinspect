@@ -1,5 +1,5 @@
 {
-	"name": "@the/types",
+	"name": "@prism/types",
 	"version": "0.2.0",
 	"private": true,
 	"main": "src/index.ts",

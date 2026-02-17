@@ -62,16 +62,16 @@ importers:
       '@paralleldrive/cuid2':
         specifier: ^2.2.2
         version: 2.3.1
-      '@the/email':
+      '@prism/email':
         specifier: workspace:*
         version: link:../../packages/email
-      '@the/schemas':
+      '@prism/schemas':
         specifier: workspace:*
         version: link:../../packages/schemas
-      '@the/types':
+      '@prism/types':
         specifier: workspace:*
         version: link:../../packages/types
-      '@the/utils/shared':
+      '@prism/utils/shared':
         specifier: workspace:*
         version: link:../../packages/utils/shared
       drizzle-orm:
@@ -108,22 +108,22 @@ importers:
       '@react-native-google-signin/google-signin':
         specifier: ^16.1.1
         version: 16.1.1(expo@54.0.33)(react-native@0.81.5(@babel/core@7.29.0)(@types/react@19.1.17)(react@19.1.0))(react@19.1.0)
-      '@the/auth/expo':
+      '@prism/auth/expo':
         specifier: workspace:*
         version: link:../../packages/auth/expo
-      '@the/schemas':
+      '@prism/schemas':
         specifier: workspace:*
         version: link:../../packages/schemas
-      '@the/types':
+      '@prism/types':
         specifier: workspace:*
         version: link:../../packages/types
-      '@the/ui/expo':
+      '@prism/ui/expo':
         specifier: workspace:*
         version: link:../../packages/ui/expo
-      '@the/utils/expo':
+      '@prism/utils/expo':
         specifier: workspace:*
         version: link:../../packages/utils/expo
-      '@the/utils/shared':
+      '@prism/utils/shared':
         specifier: workspace:*
         version: link:../../packages/utils/shared
       expo:
@@ -286,19 +286,19 @@ importers:
 
   packages/auth/expo:
     dependencies:
-      '@the/schemas':
+      '@prism/schemas':
         specifier: workspace:*
         version: link:../../schemas
-      '@the/types':
+      '@prism/types':
         specifier: workspace:*
         version: link:../../types
-      '@the/ui/expo':
+      '@prism/ui/expo':
         specifier: workspace:*
         version: link:../../ui/expo
-      '@the/utils/expo':
+      '@prism/utils/expo':
         specifier: workspace:*
         version: link:../../utils/expo
-      '@the/utils/shared':
+      '@prism/utils/shared':
         specifier: workspace:*
         version: link:../../utils/shared
       axios:
@@ -364,10 +364,10 @@ importers:
 
   packages/ui/expo:
     dependencies:
-      '@the/utils/expo':
+      '@prism/utils/expo':
         specifier: workspace:*
         version: link:../../utils/expo
-      '@the/utils/shared':
+      '@prism/utils/shared':
         specifier: workspace:*
         version: link:../../utils/shared
       expo-haptics:
@@ -407,10 +407,10 @@ importers:
 
   packages/utils/expo:
     dependencies:
-      '@the/types':
+      '@prism/types':
         specifier: workspace:*
         version: link:../../types
-      '@the/utils/shared':
+      '@prism/utils/shared':
         specifier: workspace:*
         version: link:../shared
       clsx:

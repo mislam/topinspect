@@ -1,5 +1,5 @@
 {
-	"name": "@the/ui/expo",
+	"name": "@prism/ui/expo",
 	"version": "0.2.0",
 	"private": true,
 	"main": "src/index.ts",
@@ -9,8 +9,8 @@
 		"lint:fix": "eslint src --fix"
 	},
 	"dependencies": {
-		"@the/utils/expo": "workspace:*",
-		"@the/utils/shared": "workspace:*",
+		"@prism/utils/expo": "workspace:*",
+		"@prism/utils/shared": "workspace:*",
 		"nativewind": "^4.1.23"
 	},
 	"devDependencies": {

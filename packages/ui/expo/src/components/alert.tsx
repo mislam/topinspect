@@ -1,7 +1,7 @@
 import { forwardRef, memo, useCallback, useEffect, useMemo, useState } from "react"
 
-import { cn } from "@the/utils/expo"
-import { calculateReadingTime, parseDuration } from "@the/utils/shared"
+import { cn } from "@prism/utils/expo"
+import { calculateReadingTime, parseDuration } from "@prism/utils/shared"
 import Animated, {
 	useAnimatedStyle,
 	useSharedValue,

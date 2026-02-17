@@ -1,6 +1,6 @@
 import { useState } from "react"
 
-import { Button, Text } from "@the/ui/expo"
+import { Button, Text } from "@prism/ui/expo"
 
 import { View } from "react-native"
 

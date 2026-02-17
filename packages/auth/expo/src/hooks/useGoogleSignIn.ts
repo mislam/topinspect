@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react"
 
+import { logger } from "@prism/utils/expo"
 import { GoogleSignin } from "@react-native-google-signin/google-signin"
-import { logger } from "@the/utils/expo"
 
 import { signInWithGoogle } from "../service"
 import { useAuthStore } from "../store"

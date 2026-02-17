@@ -1,5 +1,5 @@
 {
-	"name": "@the/schemas",
+	"name": "@prism/schemas",
 	"version": "0.2.0",
 	"private": true,
 	"main": "src/index.ts",

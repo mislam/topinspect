@@ -1,10 +1,13 @@
-# Expo + Hono starter powered by Turborepo
+# Prism Stack
 
-A modern, TypeScript-first monorepo starter with a scalable architecture, including:
+A full-stack TypeScript monorepo starter for building native mobile apps with companion web applications and scalable APIs.
 
-- **`apps/api`**: Hono API for Cloudflare Workers
-- **`apps/mobile`**: React Native mobile app with Expo
-- **`packages/types`**: Shared type definitions and validation schemas
+## What's Inside
+
+- **`apps/api`**: Hono API optimized for Cloudflare Workers
+- **`apps/mobile`**: React Native app with Expo for iOS and Android
+- **`apps/web`**: SvelteKit web application
+- **`packages/*`**: Shared TypeScript packages
 - **Infrastructure**: Docker Compose for local development
 
 ## Quick Start
@@ -36,7 +39,7 @@ cp apps/api/.dev.vars.example apps/api/.dev.vars
 cp apps/mobile/.env.example apps/mobile/.env
 
 # Generate JWT secret
-pnpm --filter @the/api gen:jwt-secret
+pnpm --filter @prism/api gen:jwt-secret
 ```
 
 Follow [OAuth Provider Setup](packages/auth/expo/docs/oauth.md) for creating three OAuth clients (iOS, Web, and Android) to enable Google Sign-in.
@@ -50,12 +53,13 @@ pnpm dev:install:android
 ### Development
 
 ```bash
-# Start infrastructure (PostgreSQL, Neon Proxy, MinIO)
+# Start infrastructure (PostgreSQL, Neon Proxy, Mailpit, MinIO)
 pnpm dev:up
 
 # Start individual services:
 pnpm dev:api     # Start Hono API development server
 pnpm dev:mobile  # Start Expo development server
+pnpm dev:web     # Start SvelteKit development server
 
 # Stop infrastructure
 pnpm dev:down
@@ -193,7 +197,8 @@ The hooks run the following pipeline:
 monorepo/                 # Monorepo root
 ├── apps/
 │   ├── api/              # Hono API for Cloudflare Workers
-│   └── mobile/    # React Native mobile app with Expo
+│   ├── mobile/           # React Native mobile app with Expo
+│   └── web/              # SvelteKit companion web app
 ├── packages/
 │   └── types/            # Shared type definitions and validation schemas
 ├── scripts/              # Development scripts

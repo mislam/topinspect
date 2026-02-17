@@ -3,7 +3,7 @@
  * This file registers all app-specific SVG assets with the UI library
  */
 
-import { registerSvgAssets } from "@the/ui/expo"
+import { registerSvgAssets } from "@prism/ui/expo"
 
 // Import SVG assets
 import apple from "../../assets/svg/apple.svg"

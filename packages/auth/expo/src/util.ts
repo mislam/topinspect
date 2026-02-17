@@ -1,5 +1,5 @@
-import { type ErrorResponse, UNKNOWN_ERROR } from "@the/types"
-import { logger } from "@the/utils/expo"
+import { type ErrorResponse, UNKNOWN_ERROR } from "@prism/types"
+import { logger } from "@prism/utils/expo"
 
 import { useAuthStore } from "./store"
 

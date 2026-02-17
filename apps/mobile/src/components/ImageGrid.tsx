@@ -5,8 +5,8 @@
 
 import { useState } from "react"
 
-import { colors, Icon, Text } from "@the/ui/expo"
-import { getDisplayImageUrl } from "@the/utils/expo"
+import { colors, Icon, Text } from "@prism/ui/expo"
+import { getDisplayImageUrl } from "@prism/utils/expo"
 
 import { ActivityIndicator, Image, LayoutAnimation, TouchableOpacity, View } from "react-native"
 

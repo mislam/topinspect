@@ -1,6 +1,6 @@
 # OAuth Provider Setup
 
-Setup instructions for Google and Apple Sign-In with the `@the/auth/expo` package.
+Setup instructions for Google and Apple Sign-In with the `@prism/auth/expo` package.
 
 ## Google Sign-In Setup
 

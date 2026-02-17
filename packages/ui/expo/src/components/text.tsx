@@ -1,6 +1,6 @@
 import { forwardRef, memo, useMemo } from "react"
 
-import { cn } from "@the/utils/expo"
+import { cn } from "@prism/utils/expo"
 
 import { Text as RNText, type TextProps as RNTextProps } from "react-native"
 

@@ -1,5 +1,5 @@
-import { logOut } from "@the/auth/expo"
-import { Button, Text } from "@the/ui/expo"
+import { logOut } from "@prism/auth/expo"
+import { Button, Text } from "@prism/ui/expo"
 
 import { View } from "react-native"
 
