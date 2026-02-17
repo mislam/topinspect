@@ -7,6 +7,7 @@
 		"dev:down": "docker compose down",
 		"dev:api": "pnpm --filter @the/api dev",
 		"dev:mobile": "pnpm --filter @the/mobile dev",
+		"dev:web": "pnpm --filter @the/web dev",
 		"dev:email": "pnpm --filter @the/email dev",
 		"dev:tunnel": "cloudflared tunnel --config cloudflared.yaml run",
 		"dev:install:ios": "pnpm --filter @the/mobile dev:install:ios",

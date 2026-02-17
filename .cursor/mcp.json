@@ -2,6 +2,10 @@
 	"mcpServers": {
 		"context7": {
 			"url": "https://mcp.context7.com/mcp"
+		},
+		"svelte": {
+			"command": "npx",
+			"args": ["-y", "@sveltejs/mcp"]
 		}
 	}
 }

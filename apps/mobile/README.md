@@ -28,6 +28,9 @@ pnpm dev:api
 
 # Start Expo dev server (new terminal)
 pnpm dev:mobile
+
+# Start SvelteKit dev server (new terminal)
+pnpm dev:web
 ```
 
 ### Dev Client Setup (One-time)

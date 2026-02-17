@@ -1,42 +1,52 @@
-# sv
+# Web App
 
-Everything you need to build a Svelte project, powered by [`sv`](https://github.com/sveltejs/cli).
+SvelteKit web application with Svelte 5, TypeScript, and Tailwind CSS v4.
 
-## Creating a project
+> **Part of Monorepo** - This app connects to the [Hono API](../api) for backend operations. See also the [Mobile App](../mobile).
 
-If you're seeing this, you've probably already done this step. Congrats!
+## Tech Stack
 
-```sh
-# create a new project
-npx sv create my-app
+- **Framework**: SvelteKit 2 with Svelte 5
+- **Build**: Vite 7
+- **Styling**: Tailwind CSS v4 (via `@tailwindcss/vite`)
+- **Deploy**: Vercel (via `@sveltejs/adapter-vercel`)
+- **Testing**: Vitest
+- **Lint**: ESLint (flat config) + Prettier (root)
+
+## Project Structure
+
+```
+src/
+├── app.html          # HTML shell
+├── app.d.ts          # App typings
+├── routes/           # File-based routes (SvelteKit)
+│   ├── +layout.svelte
+│   ├── +layout.css
+│   ├── +page.svelte
+│   └── layout.css
+├── lib/               # Shared code ($lib alias)
+│   ├── index.ts
+│   └── assets/
+└── *.spec.ts          # Vitest tests
 ```
 
-To recreate this project with the same configuration:
+## Scripts
 
-```sh
-# recreate this project
-pnpm dlx sv create --template minimal --types ts --add prettier eslint vitest="usages:unit" tailwindcss="plugins:none" sveltekit-adapter="adapter:vercel" mcp="ide:cursor+setup:local" --install pnpm my-app
-```
+Run from monorepo root (e.g. `pnpm --filter @the/web <script>`) or from `apps/web`:
 
-## Developing
+| Script       | Description               |
+| ------------ | ------------------------- |
+| `dev`        | Start dev server (Vite)   |
+| `build`      | Production build          |
+| `preview`    | Preview production build  |
+| `typecheck`  | Svelte + TypeScript check |
+| `lint`       | Prettier check + ESLint   |
+| `lint:fix`   | ESLint --fix              |
+| `test`       | Vitest (single run)       |
+| `test:watch` | Vitest (watch)            |
 
-Once you've created a project and installed dependencies with `npm install` (or `pnpm install` or `yarn`), start a development server:
+Formatting is handled at the repo root: `pnpm format`.
 
-```sh
-npm run dev
+## Environment
 
-# or start the server and open the app in a new browser tab
-npm run dev -- --open
-```
-
-## Building
-
-To create a production version of your app:
-
-```sh
-npm run build
-```
-
-You can preview the production build with `npm run preview`.
-
-> To deploy your app, you may need to install an [adapter](https://svelte.dev/docs/kit/adapters) for your target environment.
+Configure via `.env` (and `.env.production` for build). See SvelteKit [environment variables](https://kit.svelte.dev/docs/modules#$env-static-private) docs. Add API base URL and other env as needed when integrating with the Hono API.
